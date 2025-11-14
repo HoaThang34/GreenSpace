@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cộng Đồng</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { background: var(--bg); }
+    .community-container { max-width: 800px; margin: 30px auto; padding: 0 15px; }
+    .post-card { 
+      background: var(--panel); 
+      border: 1px solid var(--border); 
+      border-radius: 16px; 
+      margin-bottom: 25px; 
+      overflow: hidden; 
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .post-card:hover { 
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.15);
+      transform: translateY(-2px);
+    }
+    .post-body { padding: 20px 25px; }
+    .post-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; }
+    .author-avatar { 
+      width: 45px; 
+      height: 45px; 
+      border-radius: 50%; 
+      background: var(--chip-bg); 
+      display: grid; 
+      place-items: center; 
+      font-weight: 600; 
+      font-size: 1.2rem; 
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .author-avatar:hover { transform: scale(1.1); }
+    .author-info { flex-grow: 1; min-width: 0; }
+    .post-author { font-weight: 600; color: var(--fg); text-decoration: none; }
+    .post-author:hover { color: var(--mood); }
+    .post-meta { font-size: 0.8rem; color: var(--muted); display: block; margin-top: 2px; }
+    .post-content { 
+      line-height: 1.8; 
+      white-space: pre-wrap; 
+      margin-bottom: 20px; 
+      word-wrap: break-word;
+      color: var(--fg);
+    }
+    .post-footer { 
+      border-top: 1px solid var(--border); 
+      padding: 12px 25px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      background: color-mix(in srgb, var(--panel) 50%, transparent);
+    }
+    .reaction-bar { display: flex; gap: 8px; }
+    .reaction-btn { 
+      background: var(--chip-bg); 
+      border: 1px solid var(--border); 
+      color: var(--muted); 
+      padding: 8px 15px; 
+      border-radius: 99px; 
+      cursor: pointer; 
+      font-size: 0.9rem; 
+      font-weight: 500; 
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .reaction-btn:hover { 
+      background: var(--border); 
+      color: var(--fg);
+      transform: translateY(-1px);
+    }
+    .reaction-btn.active { 
+      background: var(--mood); 
+      color: #fff; 
+      border-color: var(--mood);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .reaction-btn i { font-size: 0.85rem; }
+    .comment-link { 
+      color: var(--muted); 
+      text-decoration: none; 
+      font-weight: 500;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .comment-link:hover { color: var(--fg); }
+    .create-post-card { 
+      background: linear-gradient(135deg, var(--panel) 0%, color-mix(in srgb, var(--panel) 95%, var(--mood)) 100%);
+      border: 2px dashed var(--border);
+    }
+    .create-post-card:hover { border-color: var(--mood); }
+  </style>
+</head>
+<body>
+  <header class="appbar">
+    <div class="brand">
+        <a href="/community" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+            <span class="logo">🌱</span>
+            <div>
+              <span class="brand-title" style="color:var(--fg);">Cộng Đồng</span>
+              <div style="font-size: 0.75rem; color: var(--muted); margin-top: 2px;">Nơi chia sẻ và kết nối</div>
+            </div>
+        </a>
+    </div>
+    <div class="controls">
+      <a class="chip" href="/chat" style="background: var(--mood); color: white;">Chatbot</a>
+      <a class="chip" href="/friends">Bạn bè</a>
+      <a class="chip" href="/messages">Tin nhắn <span id="unreadBadge" style="display:none; background:var(--mood-anger); color:white; border-radius:50%; width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; margin-left:4px;">0</span></a>
+      <div class="user-menu">
+        <button class="chip user-chip" id="userChip">
+          <span id="displayName">{{ display_name }}</span> ▼
+        </button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="/profile/{{ username }}">Hồ sơ của tôi</a>
+          <a href="/friends">Bạn bè</a>
+          <a href="/messages">Tin nhắn</a>
+          <div style="height: 1px; background: var(--border); margin: 8px 0;"></div>
+          <a href="#" id="logoutBtn">Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <main class="community-container">
+    <!-- Tìm kiếm và filter -->
+    <div class="post-card" style="margin-bottom: 20px; padding: 15px 20px;">
+      <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 200px; position: relative;">
+          <input type="text" id="searchUsers" placeholder="🔍 Tìm kiếm người dùng..." style="width: 100%; padding: 10px 15px; padding-right: 40px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg); color: var(--fg); font-size: 0.95rem;">
+          <div id="searchResults" style="display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 5px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; max-height: 400px; overflow-y: auto; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></div>
+        </div>
+        <button class="btn" id="showAllUsersBtn" style="white-space: nowrap; background: var(--mood-joy); color: white;">Tất cả người dùng</button>
+      </div>
+    </div>
+    
+    <!-- Form tạo bài đăng -->
+    <div class="post-card create-post-card">
+      <div class="post-body">
+        <form id="createPostForm">
+          <textarea id="postContent" style="width:100%; min-height:100px; background:transparent; border:none; color:var(--fg); font-size:1.1rem; resize:vertical; font-family: inherit;" placeholder="Chia sẻ tâm trạng, suy nghĩ của bạn với cộng đồng..." required></textarea>
+          <div class="actions" style="justify-content: space-between; align-items: center; margin-top: 15px; border-top:1px solid var(--border); padding-top:15px;">
+            <div style="color: var(--muted); font-size: 0.85rem;">Mẹo: Bạn có thể chia sẻ cảm xúc, câu chuyện, hoặc đơn giản là tâm trạng hôm nay</div>
+            <button type="submit" class="btn primary">Đăng bài</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Danh sách bài đăng -->
+    <div id="postsContainer"></div>
+    
+    <!-- Modal danh sách tất cả user -->
+    <div class="modal" id="allUsersModal">
+      <div class="panel" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+        <div class="histbar">
+          <h2>Tất cả người dùng</h2>
+          <button class="btn" id="closeAllUsersModal">Đóng</button>
+        </div>
+        <div id="allUsersList" style="margin-top: 20px;"></div>
+      </div>
+    </div>
+  </main>
+  <script src="/static/community.js"></script>
+  <script src="/static/theme.js"></script>
+</body>
+</html>
