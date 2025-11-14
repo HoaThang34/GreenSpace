@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solace — Hồ sơ của {{ profile_user.display_name }}</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/static/profile_style.css">
+</head>
+<body>
+  <header class="appbar">
+    <div class="brand">
+      <a href="/community" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+        <span class="logo">🌱</span>
+        <div>
+          <span class="brand-title" style="color:var(--fg);">Hồ sơ</span>
+          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 2px;">@{{ profile_user.username }}</div>
+        </div>
+      </a>
+    </div>
+    <div class="controls">
+      <a class="chip" href="/chat" style="background: var(--mood); color: white;">Chatbot</a>
+      <a class="chip" href="/community">Cộng đồng</a>
+      <a class="chip" href="/friends">Bạn bè</a>
+      <a class="chip" href="/messages">Tin nhắn</a>
+    </div>
+  </header>
+
+  <main class="profile-container">
+    <div class="profile-header">
+      <div class="profile-avatar" style="background-color:{{ profile_user.avatar_color }};">
+        {{ profile_user.display_name[0]|upper }}
+      </div>
+      <div class="profile-info">
+        <h1>{{ profile_user.display_name }}</h1>
+        <p class="username">@{{ profile_user.username }}</p>
+        <p class="bio">{{ profile_user.bio or 'Chưa có mô tả.' }}</p>
+      </div>
+      {% if is_own_profile %}
+      <button id="editProfileBtn" class="btn primary">Chỉnh sửa hồ sơ</button>
+      {% else %}
+      <div id="friendActions" class="friend-actions-profile">
+        <button id="friendRequestBtn" class="btn primary" style="display:none;">Kết bạn</button>
+        <button id="friendPendingBtn" class="btn" style="display:none;">Đang chờ</button>
+        <button id="friendRemoveBtn" class="btn" style="display:none; background:var(--mood-anger);">Hủy kết bạn</button>
+        <a href="/messages/{{ profile_user.id }}" class="btn" id="messageBtn" style="display:none;">Nhắn tin</a>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="profile-details">
+      <div><i class="fas fa-heart"></i><strong>Sở thích:</strong> {{ profile_user.hobbies or 'Chưa cập nhật' }}</div>
+      <div><i class="fas fa-graduation-cap"></i><strong>Lớp:</strong> {{ profile_user.grade or 'Chưa cập nhật' }}</div>
+      <div><i class="fas fa-school"></i><strong>Trường:</strong> {{ profile_user.school or 'Chưa cập nhật' }}</div>
+    </div>
+
+    <div class="activity-feed">
+      <h2>Hoạt động gần đây</h2>
+      {% for post in posts %}
+      <a href="/post/{{ post.id }}" class="post-item">
+        <p>{{ post.content[:200] }}...</p>
+        <small>{{ post.formatted_timestamp }}</small>
+      </a>
+      {% else %}
+      <p style="color:var(--muted)">Người dùng này chưa có bài đăng nào.</p>
+      {% endfor %}
+    </div>
+  </main>
+
+  <div class="modal" id="editProfileModal"></div>
+
+  <script src="/static/profile.js"></script>
+  <script src="/static/theme.js"></script>
+</body>
+</html>

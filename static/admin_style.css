@@ -1,0 +1,59 @@
+.admin-container { max-width: 1400px; margin: 30px auto; padding: 0 20px; }
+.tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 30px; gap: 10px; }
+.tab-button { padding: 12px 20px; cursor: pointer; border: none; background: transparent; color: var(--muted); font-size: 1rem; font-weight: 600; border-bottom: 3px solid transparent; transition: all 0.2s; }
+.tab-button.active { color: var(--mood); border-bottom-color: var(--mood); }
+.tab-button:hover { color: var(--fg); }
+.tab-content { display: none; animation: fadeIn 0.5s; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Grid & Cards */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+.stat-card { background: var(--panel); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
+.stat-card h3 { margin: 0; font-size: 1rem; color: var(--muted); }
+.stat-card p { font-size: 2.5rem; font-weight: 700; margin: 10px 0 0 0; }
+.grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border); }
+th { color: var(--muted); font-size: 0.9rem; }
+td { vertical-align: middle; }
+.action-btn { margin-right: 8px; font-size: 0.8rem; padding: 5px 10px; }
+.toolbar { margin-bottom: 20px; }
+.search-input {
+    width: 300px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--fg);
+    font-size: 1rem;
+}
+.table-container { overflow-x: auto; }
+
+/* Style cho modal chi tiết */
+.user-detail-panel {
+    width: min(800px, 90vw);
+    max-height: 90vh;
+}
+.user-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+.activity-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+.activity-item {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+}
+.activity-item:last-child { border-bottom: none; }

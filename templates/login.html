@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Solace — Chào mừng</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    body {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      background-color: var(--bg);
+    }
+    .login-card {
+      width: min(400px, 90vw);
+      text-align: center;
+    }
+    .login-card .brand {
+      justify-content: center;
+      font-size: 1.3rem;
+      gap: 10px;
+    }
+    .login-card .brand .logo { font-size: 2rem; }
+    .form-toggle {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      justify-content: center;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 5px;
+      transition: all 0.3s ease;
+    }
+    .form-toggle .chip {
+      flex: 1;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px;
+      transition: all 0.3s ease;
+    }
+    .form-toggle .chip.active {
+      background-color: var(--mood);
+      color: #fff;
+      border-radius: 12px;
+      transform: scale(1.05);
+    }
+    .form-group {
+      margin: 16px 0;
+      text-align: left;
+      position: relative;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 1rem;
+      border: 2px solid var(--border);
+      background: var(--input-bg);
+      color: var(--fg);
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus {
+      border-color: var(--mood);
+      outline: none;
+    }
+    .admin-shortcut { display: none; }
+    
+    /* Style cho link admin */
+    .admin-link {
+        display: block;
+        margin-top: 25px;
+        font-size: 0.85rem;
+        color: var(--muted);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    .admin-link:hover {
+        color: var(--fg);
+        text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel login-card">
+    <div class="brand">
+      <span class="logo">🌱</span>
+      <h1>Solace</h1>
+    </div>
+    <p class="muted" style="margin-top: -5px; margin-bottom: 25px;">Nơi Tâm Hồn Tìm Thấy Sự An Ủi</p>
+
+    <div class="form-toggle">
+      <button class="chip active" id="showLogin">Đăng nhập</button>
+      <button class="chip" id="showRegister">Đăng ký</button>
+    </div>
+
+    <!-- Form đăng nhập -->
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="loginUser">Tên đăng nhập</label>
+        <input id="loginUser" type="text" class="input" required>
+      </div>
+      <div class="form-group">
+        <label for="loginPass">Mật khẩu</label>
+        <input id="loginPass" type="password" class="input" required>
+      </div>
+      <button type="submit" class="btn primary" style="width: 100%; margin-top: 10px;">Đăng nhập</button>
+    </form>
+
+    <!-- Form đăng ký -->
+    <form id="registerForm" style="display: none;">
+      <div class="form-group">
+        <label for="regDisplayName">Tên hiển thị của bạn</label>
+        <input id="regDisplayName" type="text" class="input" required>
+      </div>
+      <div class="form-group">
+        <label for="regUser">Tên đăng nhập</label>
+        <input id="regUser" type="text" class="input" required>
+      </div>
+      <div class="form-group">
+        <label for="regPass">Mật khẩu</label>
+        <input id="regPass" type="password" class="input" required>
+      </div>
+      <div class="form-group">
+        <label for="regPassConfirm">Xác nhận mật khẩu</label>
+        <input id="regPassConfirm" type="password" class="input" required>
+      </div>
+      <button type="submit" class="btn primary" style="width: 100%; margin-top: 10px;">Tạo tài khoản</button>
+    </form>
+    
+    <p id="authMessage" class="muted" style="margin-top: 15px; min-height: 1em;"></p>
+
+    <!-- Nút truy cập trang admin -->
+    <a href="/admin" class="admin-link">Truy cập trang quản trị</a>
+  </div>
+
+  <div id="adminShortcut" class="admin-shortcut" title="Admin Access"></div>
+  <script src="/static/login.js"></script>
+  <script src="/static/theme.js"></script>
+</body>
+</html>
