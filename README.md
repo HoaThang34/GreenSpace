@@ -79,14 +79,6 @@ GreenSpace luôn cung cấp các nguồn lực hỗ trợ khẩn cấp:
 - Cam kết không chia sẻ dữ liệu người dùng cho bên thứ ba.
 
 ---
-
-## 📄 GIẤY PHÉP & LIÊN HỆ
-Dự án được phát triển bởi **Hòa Quang Thắng**. 
-Mọi đóng góp hoặc báo lỗi vui lòng gửi qua:
-- **Github:** [HoaThang34](https://github.com/HoaThang34)
-- **Email:** [hoaquangthang@example.com]
-
----
 *GreenSpace - Vì mọi tâm hồn đều xứng đáng được lắng nghe.*
 
 ```
