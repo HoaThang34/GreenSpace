@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenSpace - Giá trị cốt lõi từ sự thấu cảm</title>
+    <meta name="description"
+        content="Khu vườn yên bình cho tâm hồn bạn. Trò chuyện, chia sẻ và chữa lành cùng AI đồng cảm.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(var(--border))",
+                        input: "hsl(var(--input))",
+                        ring: "hsl(var(--ring))",
+                        background: "hsl(var(--background))",
+                        foreground: "hsl(var(--foreground))",
+                        primary: {
+                            DEFAULT: "hsl(var(--primary))",
+                            foreground: "hsl(var(--primary-foreground))",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(var(--secondary))",
+                            foreground: "hsl(var(--secondary-foreground))",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(var(--muted))",
+                            foreground: "hsl(var(--muted-foreground))",
+                        },
+                        accent: {
+                            DEFAULT: "hsl(var(--accent))",
+                            foreground: "hsl(var(--accent-foreground))",
+                        },
+                        card: {
+                            DEFAULT: "hsl(var(--card))",
+                            foreground: "hsl(var(--card-foreground))",
+                        },
+                    },
+                    animation: {
+                        "fade-up": "fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                        "float": "float 6s ease-in-out infinite",
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            "0%": { opacity: "0", transform: "translateY(20px)" },
+                            "100%": { opacity: "1", transform: "translateY(0)" },
+                        },
+                        float: {
+                            "0%, 100%": { transform: "translateY(0)" },
+                            "50%": { transform: "translateY(-10px)" },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 240 10% 3.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 240 10% 3.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 240 10% 3.9%;
+            --primary: 142.1 76.2% 36.3%;
+            --primary-foreground: 355.7 100% 97.3%;
+            --secondary: 240 4.8% 95.9%;
+            --secondary-foreground: 240 5.9% 10%;
+            --muted: 240 4.8% 95.9%;
+            --muted-foreground: 240 3.8% 46.1%;
+            --accent: 240 4.8% 95.9%;
+            --accent-foreground: 240 5.9% 10%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 0 0% 98%;
+            --border: 240 5.9% 90%;
+            --input: 240 5.9% 90%;
+            --ring: 142.1 76.2% 36.3%;
+            --radius: 0.75rem;
+        }
+
+        .dark {
+            --background: 240 10% 3.9%;
+            --foreground: 0 0% 98%;
+            --card: 240 10% 3.9%;
+            --card-foreground: 0 0% 98%;
+            --popover: 240 10% 3.9%;
+            --popover-foreground: 0 0% 98%;
+            --primary: 142.1 70.6% 45.3%;
+            --primary-foreground: 144.9 80.4% 10%;
+            --secondary: 240 3.7% 15.9%;
+            --secondary-foreground: 0 0% 98%;
+            --muted: 240 3.7% 15.9%;
+            --muted-foreground: 240 5% 64.9%;
+            --accent: 240 3.7% 15.9%;
+            --accent-foreground: 0 0% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 0 0% 98%;
+            --border: 240 3.7% 15.9%;
+            --input: 240 3.7% 15.9%;
+            --ring: 142.1 76.2% 36.3%;
+        }
+
+        body {
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+        }
+
+        /* Subtle grid background */
+        .bg-grid {
+            background-image: radial-gradient(circle at 1px 1px, hsl(var(--border)) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .dark .glass {
+            background: rgba(10, 10, 10, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: hsl(var(--border));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: hsl(var(--muted-foreground));
+        }
+
+        .stagger-1 {
+            animation-delay: 100ms;
+            opacity: 0;
+        }
+
+        .stagger-2 {
+            animation-delay: 200ms;
+            opacity: 0;
+        }
+
+        .stagger-3 {
+            animation-delay: 300ms;
+            opacity: 0;
+        }
+
+        .stagger-4 {
+            animation-delay: 400ms;
+            opacity: 0;
+        }
+    </style>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Driver.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.css" />
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.js.iife.js"></script>
+</head>
+
+<body class="antialiased min-h-screen relative overflow-x-hidden selection:bg-primary/20 selection:text-primary">
+    <!-- Background pattern -->
+    <div class="fixed inset-0 bg-grid opacity-50 z-[-1] pointer-events-none"></div>
+    <div
+        class="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] opacity-30 blur-[120px] rounded-full pointer-events-none z-[-1] bg-gradient-to-r from-emerald-400 to-green-600 dark:from-emerald-900 dark:to-green-900">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass border-b border-border/50 transition-all duration-300">
+        <div class="container mx-auto px-6 h-16 flex items-center justify-between">
+            <div id="tour-brand" class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+                <span class="text-2xl">🌱</span>
+                <span class="font-bold text-lg tracking-tight">GreenSpace</span>
+            </div>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
+                <a href="#mission" class="hover:text-foreground transition-colors">Sứ mệnh</a>
+                <a href="#features" class="hover:text-foreground transition-colors">Tính năng</a>
+                <a href="#reviews" class="hover:text-foreground transition-colors">Đánh giá</a>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button id="themeToggle"
+                    class="p-2 mr-2 text-muted-foreground hover:text-foreground transition-colors rounded-full hover:bg-secondary">
+                    <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                </button>
+                <a href="/login" class="text-sm font-medium hover:text-primary transition-colors hidden sm:block">Đăng
+                    nhập</a>
+                <a href="/login"
+                    class="bg-foreground text-background dark:bg-foreground dark:text-background px-4 py-2 rounded-md text-sm font-medium hover:opacity-90 transition-opacity shadow-sm">
+                    Đăng ký
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6">
+        <div class="container mx-auto max-w-4xl text-center">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8 animate-fade-up">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                GreenSpace
+            </div>
+
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 animate-fade-up stagger-1 text-balance">
+                Giá trị cốt lõi từ <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-green-600">sự thấu
+                    cảm.</span>
+            </h1>
+
+            <p
+                class="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto animate-fade-up stagger-2 text-balance leading-relaxed">
+                Khi những suy nghĩ trở nên rối bời, GreenSpace là khu vườn bình yên dành riêng cho bạn. Người bạn AI
+                luôn lắng nghe, thấu hiểu và đồng hành cùng bạn mọi lúc, mọi nơi.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up stagger-3">
+                <a href="/login" id="tour-start"
+                    class="w-full sm:w-auto px-8 py-3.5 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2 group">
+                    Bắt đầu ngay
+                    <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <a href="/guest-experience" id="tour-guest"
+                    class="w-full sm:w-auto px-8 py-3.5 bg-secondary text-secondary-foreground rounded-lg font-medium hover:bg-secondary/80 border border-border transition-colors flex items-center justify-center gap-2">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
+                    Trải nghiệm ẩn danh
+                </a>
+            </div>
+            <p class="mt-4 text-xs text-muted-foreground animate-fade-up stagger-4">
+                *Trải nghiệm ẩn danh sẽ không lưu trữ bất kỳ thông tin hay đoạn chat nào của bạn.
+            </p>
+        </div>
+
+        <!-- Floating Elements -->
+        <div class="hidden lg:block absolute top-40 left-10 animate-float" style="animation-delay: 0s;">
+            <div class="glass p-4 rounded-xl shadow-lg border border-border/50 max-w-[200px]">
+                <div class="flex gap-3 items-center mb-2">
+                    <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">🌱
+                    </div>
+                    <div class="h-2 w-20 bg-muted rounded-full"></div>
+                </div>
+                <div class="h-2 w-full bg-muted rounded-full mb-1"></div>
+                <div class="h-2 w-2/3 bg-muted rounded-full"></div>
+            </div>
+        </div>
+        <div class="hidden lg:block absolute bottom-20 right-10 animate-float" style="animation-delay: 2s;">
+            <div class="glass p-4 rounded-xl shadow-lg border border-border/50 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-500">
+                    <i data-lucide="heart" class="fill-current w-5 h-5"></i>
+                </div>
+                <div>
+                    <div class="text-sm font-semibold">Cảm thấy tốt hơn</div>
+                    <div class="text-xs text-muted-foreground">Tâm trạng +45%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section id="mission" class="py-20 bg-secondary/30 border-y border-border/50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <i data-lucide="compass" class="w-12 h-12 mx-auto text-primary mb-6"></i>
+                <h2 class="text-3xl font-bold mb-6">Sứ mệnh và Tầm nhìn</h2>
+                <div class="glass p-8 md:p-10 rounded-2xl shadow-sm text-left relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10">
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i data-lucide="target" class="w-5 h-5 text-primary"></i> Sứ mệnh
+                        </h3>
+                        <p class="text-muted-foreground mb-8 leading-relaxed">
+                            Cung cấp một <strong>không gian an toàn, không phán xét</strong> để mọi người có thể tự do
+                            chia sẻ những tâm tư, nỗi niềm sâu kín nhất. GreenSpace hướng tới việc ứng dụng AI đồng cảm
+                            để xoa dịu tổn thương tâm lý, giảm thiểu cảm giác cô đơn và mang lại sự cân bằng trong cuộc
+                            sống hiện đại.
+                        </p>
+
+                        <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                            <i data-lucide="eye" class="w-5 h-5 text-primary"></i> Tầm nhìn
+                        </h3>
+                        <p class="text-muted-foreground leading-relaxed">
+                            Trở thành <strong>người bạn đồng hành tinh thần số 1</strong>, nơi bất kỳ ai cũng có thể tìm
+                            thấy sự gắn kết và thấu cảm. GreenSpace khao khát xây dựng một hệ sinh thái chăm sóc sức
+                            khỏe tinh thần bền vững, vượt qua mọi rào cản về không gian và thời gian.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 px-6">
+        <div class="container mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">Tính năng nổi bật</h2>
+                <p class="text-muted-foreground">Những công cụ được thiết kế tỉ mỉ để chăm sóc tâm hồn bạn.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Feature 1 -->
+                <div
+                    class="bg-card text-card-foreground p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow group">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-5 group-hover:scale-110 transition-transform">
+                        <i data-lucide="message-square" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Trò Chuyện AI Đồng Cảm</h3>
+                    <p class="text-muted-foreground text-sm leading-relaxed">
+                        Mô hình ngôn ngữ được tinh chỉnh đặc biệt để hiểu và phản hồi với sự thấu cảm cao nhất, giống
+                        như một người bạn thực sự.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div
+                    class="bg-card text-card-foreground p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow group">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 mb-5 group-hover:scale-110 transition-transform">
+                        <i data-lucide="bar-chart-2" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Phân Tích Cảm Xúc</h3>
+                    <p class="text-muted-foreground text-sm leading-relaxed">
+                        Theo dõi sự thay đổi cảm xúc qua từng đoạn hội thoại. Nhận biểu đồ thống kê trực quan để thấu
+                        hiểu bản thân tốt hơn.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div
+                    class="bg-card text-card-foreground p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow group">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 mb-5 group-hover:scale-110 transition-transform">
+                        <i data-lucide="users" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Cộng Đồng Chữa Lành</h3>
+                    <p class="text-muted-foreground text-sm leading-relaxed">
+                        Tham gia các không gian chia sẻ chung, tìm kiếm những người đồng điệu, kết bạn và lan tỏa những
+                        giá trị tích cực.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div
+                    class="bg-card text-card-foreground p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow group">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 mb-5 group-hover:scale-110 transition-transform">
+                        <i data-lucide="shield" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Bảo Mật Tối Đa</h3>
+                    <p class="text-muted-foreground text-sm leading-relaxed">
+                        Mọi dữ liệu cá nhân, tin nhắn và hồ sơ cảm xúc của bạn được mã hóa an toàn. Quyền riêng tư của
+                        bạn là ưu tiên tuyệt đối.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div
+                    class="bg-card text-card-foreground p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow group">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 mb-5 group-hover:scale-110 transition-transform">
+                        <i data-lucide="alert-circle" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Hỗ Trợ Khẩn Cấp</h3>
+                    <p class="text-muted-foreground text-sm leading-relaxed">
+                        Hệ thống tự động phát hiện các dấu hiệu tiêu cực nghiêm trọng và ngay lập tức cung cấp luồng
+                        thông tin liên hệ các tổng đài trợ giúp chuyên nghiệp.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div
+                    class="bg-card text-card-foreground p-6 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow group">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-500 mb-5 group-hover:scale-110 transition-transform">
+                        <i data-lucide="mic" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Nhập Liệu Giọng Nói</h3>
+                    <p class="text-muted-foreground text-sm leading-relaxed">
+                        Dễ dàng chia sẻ tâm tư của bạn ngay cả khi không muốn gõ phím. Tính năng nhận diện giọng nói
+                        chính xác và tự nhiên.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="reviews" class="py-24 bg-muted/40 border-y border-border/50 px-6">
+        <div class="container mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold tracking-tight mb-4">Mọi người nói gì về GreenSpace</h2>
+                <p class="text-muted-foreground">Những câu chuyện chữa lành được chia sẻ từ cộng đồng của chúng tôi.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="bg-background p-6 rounded-xl border border-border shadow-sm relative">
+                    <i data-lucide="quote" class="absolute top-6 right-6 w-8 h-8 text-muted opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-gradient-to-tr from-green-400 to-blue-500 flex items-center justify-center text-white font-bold">
+                            T</div>
+                        <div>
+                            <div class="font-medium text-sm">Thu Trang</div>
+                            <div class="text-xs text-muted-foreground">Học sinh lớp 12</div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-foreground/80 leading-relaxed italic">
+                        "Những áp lực thi cử khiến mình từng rơi vào khủng hoảng. GreenSpace như một quyển nhật ký biết
+                        nói, luôn an ủi một cách nhẹ nhàng khiến mình tìm lại được sự bình tâm."
+                    </p>
+                    <div class="flex text-amber-400 mt-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-background p-6 rounded-xl border border-border shadow-sm relative">
+                    <i data-lucide="quote" class="absolute top-6 right-6 w-8 h-8 text-muted opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-400 to-pink-500 flex items-center justify-center text-white font-bold">
+                            M</div>
+                        <div>
+                            <div class="font-medium text-sm">Minh Nhật</div>
+                            <div class="text-xs text-muted-foreground">Sinh viên năm 2</div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-foreground/80 leading-relaxed italic">
+                        "Mình rất thích tính năng ẩn danh khi trải nghiệm. Nó giúp mình cởi bỏ mọi rào cản phòng vệ.
+                        Lịch sử cảm xúc cũng giúp mình nhận ra những mô thức tâm trạng của bản thân."
+                    </p>
+                    <div class="flex text-amber-400 mt-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-background p-6 rounded-xl border border-border shadow-sm relative">
+                    <i data-lucide="quote" class="absolute top-6 right-6 w-8 h-8 text-muted opacity-50"></i>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold">
+                            H</div>
+                        <div>
+                            <div class="font-medium text-sm">Hoàng Hải</div>
+                            <div class="text-xs text-muted-foreground">Nhân viên văn phòng</div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-foreground/80 leading-relaxed italic">
+                        "Không ngờ AI lại có thể phản hồi nhân tính đến vậy. Có những đêm mệt mỏi với công việc, một câu
+                        nói của GreenSpace cũng đủ làm mình thấy ấm lòng hơn rất nhiều."
+                    </p>
+                    <div class="flex text-amber-400 mt-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star-half" class="w-4 h-4 fill-current"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-border bg-background pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🌱</span>
+                    <span class="font-bold text-xl tracking-tight">GreenSpace</span>
+                </div>
+
+                <div class="flex gap-6 text-sm text-muted-foreground">
+                    <a href="/terms" class="hover:text-foreground transition-colors">Điều khoản bổ sung</a>
+                    <a href="/privacy" class="hover:text-foreground transition-colors">Bảo mật</a>
+                    <a href="/docs" class="hover:text-foreground transition-colors">Tài liệu dự án</a>
+                </div>
+            </div>
+
+            <div class="text-center text-sm text-muted-foreground pt-8 border-t border-border/50">
+                <p>&copy; <span id="year">2026</span> Bản quyền thuộc <strong>Agent_LLM</strong> — <strong>Trường THPT
+                        Chuyên Nguyễn Tất Thành</strong>.</p>
+                <p class="mt-2 text-xs opacity-70">AI Young Guru</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Init Lucide icons
+        lucide.createIcons();
+
+        // Update year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Theme toggle logic
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        // Check local storage or system preference
+        const storedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (storedTheme === 'dark' || (!storedTheme && systemPrefersDark)) {
+            html.classList.add('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // Driver.js Onboarding Tour
+        document.addEventListener('DOMContentLoaded', () => {
+            // Bỏ comment dòng này nếu muốn test lại nhiều lần
+            // localStorage.removeItem('greenspace_tour_completed');
+
+            if (!localStorage.getItem('greenspace_tour_completed')) {
+                const driver = window.driver.js.driver;
+                const driverObj = driver({
+                    showProgress: true,
+                    nextBtnText: 'Tiếp theo',
+                    prevBtnText: 'Quay lại',
+                    doneBtnText: 'Hoàn tất',
+                    allowClose: true,
+                    animate: true,
+                    smoothScroll: true,
+                    onDestroyed: () => {
+                        localStorage.setItem('greenspace_tour_completed', 'true');
+                    },
+                    steps: [
+                        { element: '#tour-brand', popover: { title: 'Chào mừng bạn! 👋', description: 'Chào mừng bạn đến với GreenSpace - Khu vườn yên bình cho tâm hồn của bạn.', side: "bottom", align: 'start' } },
+                        { element: '#themeToggle', popover: { title: 'Giao diện cá nhân hóa 🎨', description: 'Bạn có thể chuyển đổi giao diện Sáng/Tối phù hợp với sở thích của mình tại đây.', side: "bottom", align: 'start' } },
+                        { element: '#tour-start', popover: { title: 'Bắt đầu hành trình 🚀', description: 'Đăng ký hoặc đăng nhập để tham gia cộng đồng và lưu trữ dữ liệu cảm xúc của bạn.', side: "top", align: 'center' } },
+                        { element: '#tour-guest', popover: { title: 'Trải nghiệm ẩn danh 👻', description: 'Bạn chỉ muốn khám phá thử? Chế độ này không cần tạo tài khoản và không lưu trữ thông tin.', side: "top", align: 'center' } },
+                        { element: '#features', popover: { title: 'Tính năng đa dạng ✨', description: 'Kéo xuống để cùng khám phá các tính năng chữa lành tuyệt vời mà GreenSpace mang lại nhé!', side: "top", align: 'center' } }
+                    ]
+                });
+
+                // Trì hoãn một chút để đợi animation fade-up load xong
+                setTimeout(() => {
+                    driverObj.drive();
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>

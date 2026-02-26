@@ -52,7 +52,7 @@ for d in (DATA_DIR, SESS_DIR):
 # ============================================
 # Cấu hình Ollama (AI backend)
 OLLAMA_HOST: str = os.getenv("OLLAMA_HOST", "http://127.0.0.1:11434")
-MODEL_NAME: str = os.getenv("MODEL_NAME", "gpt-oss:120b-cloud")
+MODEL_NAME: str = os.getenv("MODEL_NAME", "gemini-3-flash-preview:latest")
 
 # Cấu hình Admin
 ADMIN_USER: str = os.getenv("ADMIN_USER", "admin")
@@ -225,13 +225,20 @@ def read_json(path: Optional[Path]) -> Any:
 # ==================================
 @app.route("/")
 def root():
-    if 'user_id' in session: return redirect('/chat')
-    return redirect('/login')
+    return render_template('welcome.html')
+
+@app.route("/guest-experience")
+def guest_experience():
+    session.clear()
+    session['username'] = 'khach'
+    session['display_name'] = 'Khách Trải Nghiệm'
+    session['is_guest'] = True
+    return redirect('/chat')
 
 @app.route("/chat")
 def chat_page():
     """Truyền thêm `username` vào template để link hồ sơ hoạt động."""
-    if 'user_id' not in session: return redirect('/login')
+    if 'user_id' not in session and not session.get('is_guest'): return redirect('/login')
     
     return render_template(
         'index.html',
@@ -241,6 +248,15 @@ def chat_page():
 
 @app.route("/login")
 def login_page(): return render_template('login.html')
+
+@app.route("/terms")
+def terms_page(): return render_template('terms.html')
+
+@app.route("/privacy")
+def privacy_page(): return render_template('privacy.html')
+
+@app.route("/docs")
+def docs_page(): return render_template('docs.html')
 
 @app.post("/api/register")
 def api_register():
@@ -322,10 +338,11 @@ def api_logout():
 
 @app.get("/api/session-check")
 def api_session_check():
-    if 'user_id' in session:
+    if 'user_id' in session or session.get('is_guest'):
         return jsonify({
             "logged_in": True,
-            "user_id": session['user_id']  # <<< THÊM DÒNG QUAN TRỌNG NÀY
+            "user_id": session.get('user_id'),
+            "is_guest": session.get('is_guest', False)
         })
     return jsonify({"logged_in": False})
 
@@ -379,11 +396,19 @@ def api_save():
     API lưu lịch sử trò chuyện.
     Tự động tạo tiêu đề từ tin nhắn đầu tiên của user.
     """
-    if 'user_id' not in session:
+    if 'user_id' not in session and not session.get('is_guest'):
         return jsonify({"error": "unauthorized"}), 401
     
     data = request.get_json()
     sid = ensure_sid(data.get("sid"))
+    
+    if session.get('is_guest'):
+        return jsonify({
+            "ok": True,
+            "sid": sid,
+            "title": "Chat Trải Nghiệm"
+        })
+        
     chat = data.get("chat") or []
     path = session_path(sid)
     
@@ -413,7 +438,8 @@ def api_save():
 
 @app.get("/api/sessions")
 def api_sessions():
-    if 'user_id' not in session: return jsonify([]), 401
+    if 'user_id' not in session and not session.get('is_guest'): return jsonify([]), 401
+    if session.get('is_guest'): return jsonify([])
     user_dir = get_user_session_dir()
     if not user_dir: return jsonify([])
     res = []
@@ -427,7 +453,8 @@ def api_sessions():
 
 @app.get("/api/load")
 def api_load():
-    if 'user_id' not in session: return jsonify({"error": "unauthorized"}), 401
+    if 'user_id' not in session and not session.get('is_guest'): return jsonify({"error": "unauthorized"}), 401
+    if session.get('is_guest'): return jsonify({"error": "invalid_sid"}), 400
     sid = request.args.get("sid")
     if not sid: return jsonify({"error": "invalid_sid"}), 400
     path = session_path(sid)
@@ -625,7 +652,7 @@ def api_react_post(post_id):
 def get_system_prompt():
     prompt_file = TRAIN_DIR / "a_seed_prompt.txt"
     if prompt_file.exists(): return prompt_file.read_text('utf-8')
-    return "Bạn là một trợ lý đồng cảm và hữu ích tên là Solace."
+    return "Bạn là một trợ lý đồng cảm và hữu ích tên là GreenSpace."
 
 def ollama_chat(messages: List[Dict[str, str]]):
     """
@@ -662,7 +689,7 @@ def api_chat():
     API chat với AI Solace.
     Xử lý tin nhắn từ user, gọi Ollama, và trả về phản hồi với emotion.
     """
-    if 'user_id' not in session:
+    if 'user_id' not in session and not session.get('is_guest'):
         return jsonify({"error": "unauthorized"}), 401
     
     data = request.get_json()
@@ -1511,7 +1538,7 @@ if __name__ == "__main__":
     host = "0.0.0.0"
     port = 80
     
-    print(f"🌱 Máy chủ Solace đang khởi động trên cổng {port}...")
+    print(f"🌱 Máy chủ GreenSpace đang khởi động trên cổng {port}...")
     
     def print_network_info():
         """In thông tin địa chỉ IP để truy cập từ mạng nội bộ."""

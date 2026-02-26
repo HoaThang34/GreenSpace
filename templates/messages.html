@@ -1,98 +1,170 @@
 <!doctype html>
 <html lang="vi">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tin Nhắn</title>
+  <title>Tin Nhắn — GreenSpace</title>
   <link rel="stylesheet" href="/static/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    body { background: var(--bg); }
-    .messages-container { max-width: 900px; margin: 30px auto; padding: 0 15px; }
-    .conversation-item { 
-      background: var(--panel); 
-      border: 1px solid var(--border); 
-      border-radius: 12px; 
-      padding: 15px 20px; 
-      margin-bottom: 12px;
+    body {
+      background: var(--background);
+    }
+
+    .messages-container {
+      max-width: 680px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    .conversation-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 12px 16px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: border-color 0.15s ease;
       text-decoration: none;
       color: inherit;
     }
-    .conversation-item:hover { 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transform: translateY(-2px);
+
+    .conversation-item:hover {
+      border-color: var(--muted-foreground);
     }
-    .conversation-avatar { 
-      width: 50px; 
-      height: 50px; 
-      border-radius: 50%; 
-      display: grid; 
-      place-items: center; 
-      font-weight: 600; 
-      font-size: 1.3rem;
+
+    .conversation-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 1rem;
       flex-shrink: 0;
     }
-    .conversation-info { flex-grow: 1; min-width: 0; }
-    .conversation-name { font-weight: 600; color: var(--fg); margin-bottom: 4px; }
-    .conversation-preview { 
-      font-size: 0.9rem; 
-      color: var(--muted); 
+
+    .conversation-info {
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .conversation-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--foreground);
+      margin-bottom: 2px;
+    }
+
+    .conversation-preview {
+      font-size: 0.8rem;
+      color: var(--muted-foreground);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .conversation-meta { 
-      display: flex; 
-      flex-direction: column; 
-      align-items: flex-end; 
-      gap: 5px;
+
+    .conversation-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
       flex-shrink: 0;
     }
-    .conversation-time { font-size: 0.8rem; color: var(--muted); }
-    .unread-badge { 
-      background: var(--mood); 
-      color: white; 
-      border-radius: 50%; 
-      width: 20px; 
-      height: 20px; 
-      display: grid; 
-      place-items: center; 
-      font-size: 0.75rem; 
+
+    .conversation-time {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+    }
+
+    .unread-badge {
+      background: var(--mood);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
       font-weight: 600;
     }
-    .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
-    .empty-state i { font-size: 4rem; margin-bottom: 20px; opacity: 0.5; }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted-foreground);
+    }
+
+    .empty-state svg {
+      margin-bottom: 16px;
+      opacity: 0.3;
+    }
+
+    /* Global chat link */
+    .global-chat-link {
+      background: linear-gradient(135deg, var(--card), color-mix(in srgb, var(--card) 90%, var(--mood)));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s;
+    }
+
+    .global-chat-link:hover {
+      border-color: var(--mood);
+    }
+
+    .global-chat-link .conversation-name {
+      color: var(--mood);
+    }
   </style>
 </head>
+
 <body>
   <header class="appbar">
     <div class="brand">
-      <a href="/community" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+      <a href="/community" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
         <span class="logo">🌱</span>
         <div>
-          <span class="brand-title" style="color:var(--fg);">Tin Nhắn</span>
-          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 2px;">Trò chuyện trực tiếp</div>
+          <span class="brand-title" style="color:var(--foreground);">Tin Nhắn</span>
+          <div class="brand-tagline">Trò chuyện trực tiếp</div>
         </div>
       </a>
     </div>
     <div class="controls">
-      <a class="chip" href="/chat" style="background: var(--mood); color: white;">Chatbot</a>
+      <a class="chip" href="/chat" style="background: var(--mood); color: white; border-color: var(--mood);">Chatbot</a>
       <a class="chip" href="/community">Cộng đồng</a>
       <a class="chip" href="/friends">Bạn bè</a>
     </div>
   </header>
-  
+
   <main class="messages-container">
+    <!-- Global chat link -->
+    <a href="/messages/global" class="global-chat-link">
+      <div class="conversation-avatar" style="background: var(--mood-joy); color: white;">🌐</div>
+      <div class="conversation-info">
+        <div class="conversation-name">Nhóm Chat Chung</div>
+        <div class="conversation-preview">Trò chuyện với tất cả mọi người</div>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted-foreground)" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </a>
+
     <div id="conversationsList"></div>
   </main>
 
   <script src="/static/messages.js"></script>
   <script src="/static/theme.js"></script>
 </body>
-</html>
 
+</html>

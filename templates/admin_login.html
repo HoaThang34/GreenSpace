@@ -1,54 +1,115 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Solace — Admin Login</title>
-  <!--
-    READABILITY EDITION:
-    - Tiny comments to clarify structure and JS flow.
-    - No changes to IDs or logic used by the backend.
-  -->
+  <title>GreenSpace — Quản trị</title>
   <link rel="stylesheet" href="/static/style.css" />
   <style>
-    body { display: grid; place-items: center; min-height: 100vh; }
-    .login-card { width: min(420px, 90vw); text-align: center; }
-    .login-card .brand { justify-content: center; }
-    .form-group { margin: 20px 0; text-align: left; }
-    .form-group label { display: block; margin-bottom: 8px; color: var(--muted); font-weight: 500; }
-    .form-group input { width: 100%; padding: 14px; border-radius: 16px; font-size: 1rem; }
+    body {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      background: var(--background);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0);
+      background-size: 40px 40px;
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    .login-card {
+      width: min(420px, 92vw);
+      text-align: center;
+      animation: scaleIn 0.3s ease-out;
+    }
+
+    .login-card .brand {
+      justify-content: center;
+    }
+
+    .login-card h1 {
+      font-size: 1.3rem;
+      letter-spacing: -0.3px;
+    }
+
+    .form-group {
+      margin: 16px 0;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted-foreground);
+      font-weight: 500;
+      font-size: 0.8rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--foreground);
+      font-family: inherit;
+    }
+
+    .form-group input:focus {
+      border-color: var(--ring);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 20%, transparent);
+      outline: none;
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
+
 <body>
-  <!-- Centered admin login card -->
   <div class="panel login-card">
     <div class="brand">
       <span class="logo">🌱</span>
-      <h1>Admin Panel</h1>
+      <h1>Trung Tâm Quản Trị</h1>
     </div>
+    <p class="muted" style="margin-bottom: 24px; font-size: 0.85rem;">Đăng nhập để truy cập bảng điều khiển</p>
 
-    <!-- Simple username/password form posts to /api/admin/login via fetch -->
     <form id="loginForm">
       <div class="form-group">
-        <label for="username">Username</label>
-        <input id="username" type="text" class="input" required value="admin">
+        <label for="username">Tên đăng nhập</label>
+        <input id="username" type="text" required value="admin" placeholder="admin">
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
-        <input id="password" type="password" class="input" required>
+        <label for="password">Mật khẩu</label>
+        <input id="password" type="password" required placeholder="Nhập mật khẩu">
       </div>
-      <button type="submit" class="btn primary" style="width: 100%;">Login</button>
-      <!-- Status text area -->
-      <p id="authMessage" class="muted" style="margin-top: 15px; min-height: 1em;"></p>
+      <button type="submit" class="btn primary" style="width: 100%; height: 40px; font-size: 0.9rem;">Đăng nhập</button>
+      <p id="authMessage" class="muted" style="margin-top: 14px; min-height: 1em; font-size: 0.85rem;"></p>
     </form>
   </div>
 
   <script>
-    // Handle login submission: POST to /api/admin/login, then redirect or show message
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const msgEl = document.getElementById('authMessage');
-      msgEl.textContent = 'Checking...';
+      msgEl.textContent = 'Đang kiểm tra...';
       const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -60,9 +121,10 @@
       if (res.ok) {
         window.location.href = '/admin/dashboard';
       } else {
-        msgEl.textContent = 'Invalid credentials. Please try again.';
+        msgEl.textContent = 'Thông tin đăng nhập không hợp lệ.';
       }
     });
   </script>
 </body>
+
 </html>

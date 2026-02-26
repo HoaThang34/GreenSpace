@@ -34,9 +34,9 @@ IF NOT %ERRORLEVEL% == 0 (
 ECHO >> Cai dat thu vien hoan tat!
 
 ECHO.
-ECHO --- Buoc 3: Tai mo hinh 'gpt-oss:120b-cloud' tu Ollama...
+ECHO --- Buoc 3: Tai mo hinh 'Gemini 3 Flash' tu Ollama...
 ECHO Luu y: Buoc nay co the mat rat nhieu thoi gian va dung luong.
-ollama pull gpt-oss:120b-cloud
+ollama pull gemini-3-flash-preview:latest
 
 REM Kiem tra xem buoc truoc co thanh cong khong
 IF NOT %ERRORLEVEL% == 0 (

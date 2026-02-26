@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài liệu Dự án - GreenSpace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 240 10% 3.9%;
+            --primary: 142.1 76.2% 36.3%;
+        }
+
+        .dark {
+            --background: 240 10% 3.9%;
+            --foreground: 0 0% 98%;
+        }
+
+        body {
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+        }
+
+        .doc-section {
+            margin-bottom: 3rem;
+        }
+
+        .doc-h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .doc-p {
+            color: #6b7280;
+            line-height: 1.625;
+            margin-bottom: 1rem;
+        }
+
+        .dark .doc-p {
+            color: #9ca3af;
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen p-6 md:p-12">
+    <div class="max-w-4xl mx-auto">
+        <header class="mb-16">
+            <a href="/" class="inline-flex items-center gap-2 mb-6 text-primary hover:opacity-80 transition-opacity">
+                <span>🌱</span>
+                <span class="font-bold">GreenSpace</span>
+            </a>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Tài liệu Dự án</h1>
+            <p class="text-xl text-gray-500">Khám phá kiến trúc, công nghệ và tầm nhìn kỹ thuật đằng sau GreenSpace.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Sidebar Navigation (Desktop) -->
+            <aside class="hidden md:block space-y-4 sticky top-12 h-fit">
+                <nav class="flex flex-col gap-2 text-sm font-medium text-gray-500">
+                    <a href="#overview" class="hover:text-primary transition-colors">Tổng quan dự án</a>
+                    <a href="#tech-stack" class="hover:text-primary transition-colors">Công nghệ sử dụng</a>
+                    <a href="#architecture" class="hover:text-primary transition-colors">Kiến trúc hệ thống</a>
+                    <a href="#ai-engine" class="hover:text-primary transition-colors">Cơ chế AI & Đồng cảm</a>
+                    <a href="#security" class="hover:text-primary transition-colors">Bảo mật & Riêng tư</a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="md:col-span-2 space-y-16">
+                <!-- Overview -->
+                <section id="overview" class="doc-section">
+                    <h2 class="doc-h2">1. Tổng quan dự án</h2>
+                    <p class="doc-p">GreenSpace là một hệ thống hỗ trợ sức khỏe tinh thần ứng dụng trí tuệ nhân tạo
+                        (AI), được phát triển bởi đội ngũ <strong>Agent_LLM</strong> tại <strong>Trường THPT Chuyên
+                            Nguyễn Tất Thành</strong>. Dự án ra đời nhằm giải quyết những áp lực tâm lý trong cuộc sống
+                        hiện đại thông qua sự kết nối giữa con người và công nghệ thấu cảm.</p>
+                </section>
+
+                <!-- Tech Stack -->
+                <section id="tech-stack" class="doc-section">
+                    <h2 class="doc-h2">2. Công nghệ sử dụng</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div
+                            class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+                            <h3 class="font-semibold text-primary mb-1">Backend</h3>
+                            <p class="text-sm text-gray-500">Python & Flask</p>
+                        </div>
+                        <div
+                            class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+                            <h3 class="font-semibold text-primary mb-1">AI Engine</h3>
+                            <p class="text-sm text-gray-500">Ollama & Large Language Models</p>
+                        </div>
+                        <div
+                            class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+                            <h3 class="font-semibold text-primary mb-1">Database</h3>
+                            <p class="text-sm text-gray-500">SQLite & JSON Storage</p>
+                        </div>
+                        <div
+                            class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+                            <h3 class="font-semibold text-primary mb-1">Frontend</h3>
+                            <p class="text-sm text-gray-500">Tailwind CSS (Shadcn style)</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Architecture -->
+                <section id="architecture" class="doc-section">
+                    <h2 class="doc-h2">3. Kiến trúc hệ thống</h2>
+                    <p class="doc-p">Ứng dụng tuân theo kiến trúc Client-Server hiện đại:</p>
+                    <ul class="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-400">
+                        <li><strong>Giao thức:</strong> Sử dụng RESTful API để trao đổi dữ liệu JSON giữa Frontend và
+                            Backend.</li>
+                        <li><strong>Dữ liệu:</strong> Quản lý người dùng và bài đăng qua SQLite, trong khi các phiên hội
+                            thoại được lưu trữ dưới dạng JSON an toàn để dễ dàng mở rộng và sao lưu.</li>
+                        <li><strong>Phiên làm việc:</strong> Hệ thống sử dụng Flask-Session để duy trì trạng thái đăng
+                            nhập và cho phép tính năng "Trải nghiệm ẩn danh" hoạt động độc lập.</li>
+                    </ul>
+                </section>
+
+                <!-- AI Engine -->
+                <section id="ai-engine" class="doc-section">
+                    <h2 class="doc-h2">4. Cơ chế AI & Đồng cảm</h2>
+                    <p class="doc-p">Lõi của GreenSpace là một mô hình ngôn ngữ lớn được cấu hình với hệ thống Prompt
+                        chuyên sâu về <strong>Tâm lý học tích cực</strong> và <strong>Giao tiếp không phán xét</strong>.
+                        AI có khả năng:</p>
+                    <ul class="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-400">
+                        <li>Nhận diện cảm xúc (Emotion Detection) từ văn bản của người dùng.</li>
+                        <li>Phân loại trạng thái tâm lý để điều chỉnh tông giọng phản hồi phù hợp.</li>
+                        <li>Phát hiện các từ khóa mang tính tiêu cực cực đoan để kích hoạt hệ thống hỗ trợ khẩn cấp.
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Security -->
+                <section id="security" class="doc-section">
+                    <h2 class="doc-h2">5. Bảo mật & Riêng tư</h2>
+                    <p class="doc-p">Chúng tôi coi trọng dữ liệu của bạn hơn tất cả:</p>
+                    <ul class="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-400">
+                        <li><strong>Mã hóa:</strong> Mật khẩu người dùng được băm (hash) bằng PBKDF2 với độ bảo mật cao.
+                        </li>
+                        <li><strong>Riêng tư tuyệt đối:</strong> Chế độ ẩn danh không để lại bất kỳ "dấu vết" nào trên ổ
+                            đĩa máy chủ sau khi phiên kết thúc.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+
+        <footer class="mt-24 pt-8 border-t border-gray-200 dark:border-gray-800 text-center">
+            <p class="text-sm text-gray-500">Tài liệu kỹ thuật dự án GreenSpace — AI Young Guru</p>
+        </footer>
+    </div>
+</body>
+
+</html>

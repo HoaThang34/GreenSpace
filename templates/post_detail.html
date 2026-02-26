@@ -1,91 +1,193 @@
 <!doctype html>
 <html lang="vi">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Solace — Chi tiết bài đăng</title>
+  <title>Chi tiết bài đăng — GreenSpace</title>
   <link rel="stylesheet" href="/static/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    body { background: var(--bg); }
-    .community-container { max-width: 750px; margin: 30px auto; padding: 0 15px; }
-    .post-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 25px; overflow: hidden; }
-    .post-body { padding: 25px 30px; }
-    .post-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-    .author-avatar { width: 45px; height: 45px; border-radius: 50%; background: var(--chip-bg); display: grid; place-items: center; font-weight: 600; font-size: 1.3rem; flex-shrink: 0; }
-    .author-info { flex-grow: 1; }
-    .post-author { font-weight: 600; color: var(--fg); font-size: 1.1rem; }
-    .post-meta { font-size: 0.85rem; color: var(--muted); }
-    .post-content { line-height: 1.8; white-space: pre-wrap; font-size: 1.1rem; }
-    .delete-btn { background: transparent; border: 1px solid var(--border); border-radius: 8px; color: var(--muted); cursor: pointer; font-size: 0.8rem; padding: 5px 10px; transition: all 0.2s; }
-    .delete-btn:hover { color: #fff; background: var(--mood-anger); border-color: var(--mood-anger); }
-    
-    /* Style cho khu vực bình luận */
+    body {
+      background: var(--background);
+    }
+
+    .community-container {
+      max-width: 680px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    .post-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .post-body {
+      padding: 20px 24px;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--secondary);
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .author-info {
+      flex-grow: 1;
+    }
+
+    .post-author {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--foreground);
+    }
+
+    .post-meta {
+      font-size: 0.8rem;
+      color: var(--muted-foreground);
+    }
+
+    .post-content {
+      line-height: 1.7;
+      white-space: pre-wrap;
+      font-size: 0.95rem;
+      color: var(--foreground);
+    }
+
+    .delete-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--muted-foreground);
+      cursor: pointer;
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .delete-btn:hover {
+      color: #fff;
+      background: var(--destructive);
+      border-color: var(--destructive);
+    }
+
+    /* Comments section */
     .comments-section {
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 25px 30px;
-        margin-top: 30px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-top: 16px;
     }
+
+    .comments-section h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
     .comment-list-wrapper {
-        max-height: 400px; /* Giới hạn chiều cao */
-        overflow-y: auto;   /* Thêm thanh cuộn khi cần */
-        padding-right: 10px; /* Tạo khoảng trống cho thanh cuộn */
-        margin-top: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 8px;
+      margin-top: 16px;
     }
+
     .comment-card {
-        display: flex;
-        gap: 15px;
-        padding: 15px 0;
-        border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
     }
-    .comment-card:last-child { border-bottom: none; }
-    .comment-author { font-weight: 600; }
-    .comment-meta { font-size: 0.8rem; color: var(--muted); margin-left: 8px; }
-    .comment-content { color: var(--fg); margin-top: 4px; line-height: 1.6; }
+
+    .comment-card:last-child {
+      border-bottom: none;
+    }
+
+    .comment-author {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .comment-meta {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      margin-left: 8px;
+    }
+
+    .comment-content {
+      color: var(--foreground);
+      margin-top: 4px;
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
+
 <body>
   <header class="appbar">
     <div class="brand">
-        <a href="/chat" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
-            <span class="logo">🌱</span>
-            <span class="brand-title" style="color:var(--fg);">Solace</span>
-        </a>
+      <a href="/chat" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+        <span class="logo">🌱</span>
+        <span class="brand-title" style="color:var(--foreground);">GreenSpace</span>
+      </a>
     </div>
     <div class="controls">
-      <a class="chip" href="/community">← Quay lại</a>
+      <a class="chip" href="/community">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Quay lại
+      </a>
     </div>
   </header>
-  
+
   <main class="community-container">
-    <!-- Nơi hiển thị bài đăng chính -->
     <div id="postDetailContainer"></div>
 
-    <!-- Khu vực bình luận với thiết kế mới -->
     <div class="comments-section">
-        <h3>Bình luận</h3>
-        <div class="comment-list-wrapper" id="commentListWrapper">
-            <div id="commentList"></div>
-        </div>
+      <h3>Bình luận</h3>
+      <div class="comment-list-wrapper" id="commentListWrapper">
+        <div id="commentList"></div>
+      </div>
     </div>
 
-    <!-- Form tạo bình luận -->
-    <div class="post-card" style="margin-top: 30px;">
-        <div class="post-body">
-            <form id="createCommentForm">
-                <textarea id="commentContent" style="width:100%; min-height:80px; background:transparent; border:none; color:var(--fg); font-size:1rem; resize:vertical;" placeholder="Viết bình luận của bạn..." required></textarea>
-                <div class="actions" style="justify-content: flex-end; margin-top: 15px; border-top:1px solid var(--border); padding-top:15px;">
-                    <button type="submit" class="btn primary">Gửi bình luận</button>
-                </div>
-            </form>
-        </div>
+    <div class="post-card" style="margin-top: 16px;">
+      <div class="post-body">
+        <form id="createCommentForm">
+          <textarea id="commentContent"
+            style="width:100%; min-height:60px; background:transparent; border:none; color:var(--foreground); font-size:0.9rem; resize:vertical; font-family: inherit; outline: none;"
+            placeholder="Viết bình luận của bạn..." required></textarea>
+          <div
+            style="display:flex; justify-content:flex-end; margin-top:12px; border-top:1px solid var(--border); padding-top:12px;">
+            <button type="submit" class="btn primary">Gửi bình luận</button>
+          </div>
+        </form>
+      </div>
     </div>
   </main>
-  
+
   <script> const POST_ID = "{{ post_id }}"; </script>
   <script src="/static/post_detail.js"></script>
   <script src="/static/theme.js"></script>
 </body>
+
 </html>

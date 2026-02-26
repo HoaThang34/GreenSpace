@@ -57,7 +57,7 @@
     marked.setOptions({ breaks: true, gfm: true });
   }
 
-// trang thai
+  // trang thai
   let logs = [];
   let typing = null;
   let sessionEmotions = [];
@@ -66,7 +66,7 @@
   localStorage.setItem("aseed_sid", SID);
   let emotionChartInstance = null;
   const moodOrb = $("#moodOrb");
-  
+
   // =========================
   // Điều Khiển Cảm Xúc & Theme
   // =========================
@@ -80,67 +80,67 @@
     body.classList.add(`mood-${newMood}`);
     currentMood = newMood;
     if (moodOrb) {
-        moodOrb.style.backgroundColor = `var(--mood)`;
+      moodOrb.style.backgroundColor = `var(--mood)`;
     }
   }
-    // ===================================
-    // (MỚI) Logic Nhập Liệu Bằng Giọng Nói
-    // ===================================
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    let recognition;
+  // ===================================
+  // (MỚI) Logic Nhập Liệu Bằng Giọng Nói
+  // ===================================
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let recognition;
 
-    // Chỉ khởi tạo nếu trình duyệt hỗ trợ
-    if (SpeechRecognition) {
-        recognition = new SpeechRecognition();
-        recognition.lang = 'vi-VN'; // Thiết lập ngôn ngữ Tiếng Việt
-        recognition.continuous = false; // Chỉ ghi âm một câu rồi dừng
-        recognition.interimResults = false; // Chỉ trả về kết quả cuối cùng
+  // Chỉ khởi tạo nếu trình duyệt hỗ trợ
+  if (SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.lang = 'vi-VN'; // Thiết lập ngôn ngữ Tiếng Việt
+    recognition.continuous = false; // Chỉ ghi âm một câu rồi dừng
+    recognition.interimResults = false; // Chỉ trả về kết quả cuối cùng
 
-        let isListening = false;
+    let isListening = false;
 
-        micBtn.onclick = () => {
-            if (isListening) {
-                recognition.stop();
-            } else {
-                recognition.start();
-            }
-        };
+    micBtn.onclick = () => {
+      if (isListening) {
+        recognition.stop();
+      } else {
+        recognition.start();
+      }
+    };
 
-        recognition.onstart = () => {
-            isListening = true;
-            micBtn.classList.add('listening');
-            micBtn.title = "Đang lắng nghe... Nhấn để dừng.";
-        };
+    recognition.onstart = () => {
+      isListening = true;
+      micBtn.classList.add('listening');
+      micBtn.title = "Đang lắng nghe... Nhấn để dừng.";
+    };
 
-        recognition.onend = () => {
-            isListening = false;
-            micBtn.classList.remove('listening');
-            micBtn.title = "Nhập bằng giọng nói";
-        };
+    recognition.onend = () => {
+      isListening = false;
+      micBtn.classList.remove('listening');
+      micBtn.title = "Nhập bằng giọng nói";
+    };
 
-        recognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
-            // Thêm nội dung vào cuối, có dấu cách nếu cần
-            inp.value += (inp.value.length > 0 ? ' ' : '') + transcript;
-            // Kích hoạt sự kiện input để textarea tự động co giãn
-            inp.dispatchEvent(new Event('input'));
-        };
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      // Thêm nội dung vào cuối, có dấu cách nếu cần
+      inp.value += (inp.value.length > 0 ? ' ' : '') + transcript;
+      // Kích hoạt sự kiện input để textarea tự động co giãn
+      inp.dispatchEvent(new Event('input'));
+    };
 
-        recognition.onerror = (event) => {
-            if (event.error === 'not-allowed') {
-                alert('Bạn đã chặn quyền truy cập vào micro. Vui lòng cho phép trong cài đặt trình duyệt.');
-            } else if (event.error === 'no-speech') {
-                // Không nói gì, không cần thông báo
-            } else {
-                alert(`Lỗi nhận dạng giọng nói: ${event.error}`);
-            }
-        };
+    recognition.onerror = (event) => {
+      if (event.error === 'not-allowed') {
+        alert('Bạn đã chặn quyền truy cập vào micro. Vui lòng cho phép trong cài đặt trình duyệt.');
+      } else if (event.error === 'no-speech') {
+        // Không nói gì, không cần thông báo
+      } else {
+        alert(`Lỗi nhận dạng giọng nói: ${event.error}`);
+      }
+    };
 
-    } else {
-        // Nếu trình duyệt không hỗ trợ, ẩn nút micro đi
-        if(micBtn) micBtn.style.display = 'none';
-        console.log("Trình duyệt này không hỗ trợ Web Speech API.");
-    }
+  } else {
+    // Nếu trình duyệt không hỗ trợ, ẩn nút micro đi
+    if (micBtn) micBtn.style.display = 'none';
+    console.log("Trình duyệt này không hỗ trợ Web Speech API.");
+  }
 
   // =========================
   // Chức Năng Chat Cốt Lõi
@@ -212,7 +212,7 @@
     };
     type();
   }
-  
+
   function showTyping() {
     if (typing) return;
     typing = document.createElement("div");
@@ -298,7 +298,7 @@
       }
     });
   }
-  
+
   // Sự kiện giao diện, Phiên & Lịch sử, Tải lần đầu, Logic menu di động, Logic đổi mật khẩu...
   sendBtn.onclick = send;
   inp.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } });
@@ -317,13 +317,49 @@
   statsClose.onclick = () => statsModal.classList.remove("show");
   startBtn.onclick = () => { intro.classList.remove("show"); typeMessage(window.GREETING, 'neutral'); };
   logoutBtn.onclick = async () => { await fetch('/api/logout', { method: 'POST' }); window.location.href = '/login'; };
-  fetch('/api/session-check').then(r => r.json()).then(data => { if (!data.logged_in) window.location.href = '/login'; });
-  
+  window.IS_GUEST = false;
+  fetch('/api/session-check').then(r => r.json()).then(data => {
+    if (!data.logged_in) {
+      window.location.href = '/login';
+    } else if (data.is_guest) {
+      window.IS_GUEST = true;
+      // Ẩn các tính năng không dành cho khách
+      if (historyBtn) historyBtn.style.display = 'none';
+      if (statsBtn) statsBtn.style.display = 'none'; // Thống kê phiên có thể giữ lại, nhưng thường khách không cần
+
+      const myProfileBtn = $("#myProfileBtn");
+      const friendsMenuLink = $("#friendsMenuLink");
+      const messagesMenuLink = $("#messagesMenuLink");
+      const changePasswordBtn = $("#changePasswordBtn");
+      const tourCommunity = $("#tour-community");
+
+      if (myProfileBtn) myProfileBtn.style.display = 'none';
+      if (friendsMenuLink) friendsMenuLink.style.display = 'none';
+      if (messagesMenuLink) messagesMenuLink.style.display = 'none';
+      if (changePasswordBtn) changePasswordBtn.style.display = 'none';
+      if (tourCommunity) tourCommunity.style.display = 'none';
+
+      // Đổi chữ Logout thành Thoát
+      if (logoutBtn) {
+        const logoutText = logoutBtn.querySelector('span') || logoutBtn;
+        logoutBtn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+            Thoát chế độ ẩn danh
+          `;
+      }
+    }
+  });
+
   // ============================================
   // === Thông báo tin nhắn mới ===
   // ============================================
   const unreadBadge = $("#unreadBadge");
   async function updateUnreadCount() {
+    if (window.IS_GUEST) return;
     try {
       const res = await fetch('/api/messages/unread-count');
       const data = await res.json();
@@ -337,17 +373,18 @@
       // Ignore errors
     }
   }
-  
+
   // Cập nhật số lượng tin nhắn chưa đọc mỗi 5 giây
   if (unreadBadge) {
     updateUnreadCount();
     setInterval(updateUnreadCount, 5000);
   }
-  
+
   // Cập nhật badge trong menu dropdown
   const unreadBadgeMenu = $("#unreadBadgeMenu");
   if (unreadBadgeMenu) {
     async function updateUnreadCountMenu() {
+      if (window.IS_GUEST) return;
       try {
         const res = await fetch('/api/messages/unread-count');
         const data = await res.json();
@@ -381,7 +418,7 @@
     emergencyCloseBtn.onclick = () => {
       emergencyModal.classList.remove('show');
     };
-    
+
     // Đóng modal khi nhấn ra ngoài vùng panel
     emergencyModal.addEventListener('click', (e) => {
       if (e.target === emergencyModal) {

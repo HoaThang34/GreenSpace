@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chính sách Bảo mật - GreenSpace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 240 10% 3.9%;
+            --primary: 142.1 76.2% 36.3%;
+            --border: 240 5.9% 90%;
+        }
+
+        .dark {
+            --background: 240 10% 3.9%;
+            --foreground: 0 0% 98%;
+            --border: 240 3.7% 15.9%;
+        }
+
+        body {
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen p-6 md:p-12">
+    <div class="max-w-3xl mx-auto">
+        <header class="mb-12">
+            <a href="/" class="inline-flex items-center gap-2 mb-6 text-primary hover:opacity-80 transition-opacity">
+                <span>🌱</span>
+                <span class="font-bold">GreenSpace</span>
+            </a>
+            <h1 class="text-4xl font-bold tracking-tight">Chính sách Bảo mật</h1>
+            <p class="text-gray-500 mt-2">Cập nhật lần cuối: 26 tháng 2, 2026</p>
+        </header>
+
+        <div class="space-y-8 text-gray-700 dark:text-gray-300 leading-relaxed">
+            <section>
+                <h2 class="text-2xl font-semibold text-foreground mb-4">1. Thu thập dữ liệu</h2>
+                <p>Chúng tôi cam kết bảo vệ quyền riêng tư của bạn. Khi bạn tạo tài khoản, chúng tôi chỉ thu thập các
+                    thông tin cơ bản như tên hiển thị và tên đăng nhập để quản lý session.</p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold text-foreground mb-4">2. Trải nghiệm ẩn danh</h2>
+                <p>Đối với tính năng <strong>Trải nghiệm ẩn danh</strong>, toàn bộ cuộc trò chuyện của bạn sẽ được xử lý
+                    trong bộ nhớ tạm (session) và <strong>hoàn toàn xóa sạch</strong> ngay khi bạn tắt trình duyệt hoặc
+                    kết thúc phiên. Không có dữ liệu nào được ghi lại vào cơ sở dữ liệu của chúng tôi.</p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold text-foreground mb-4">3. Sử dụng thông tin</h2>
+                <p>Dữ liệu trò chuyện của người dùng có tài khoản được sử dụng để giúp AI nhớ lại ngữ cảnh trong phiên
+                    làm việc, mang lại trải nghiệm hỗ trợ cá nhân hóa tốt hơn. Chúng tôi không bao giờ chia sẻ dữ liệu
+                    này cho bên thứ ba vì mục đích quảng cáo.</p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold text-foreground mb-4">4. Bảo mật</h2>
+                <p>Chúng tôi triển khai các biện pháp kỹ thuật cần thiết để bảo vệ thông tin cá nhân của bạn khỏi việc
+                    truy cập trái phép hoặc mất mát dữ liệu.</p>
+            </section>
+        </div>
+
+        <footer class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800 text-center">
+            <p class="text-sm text-gray-500">Bản quyền thuộc Agent_LLM — Trường THPT Chuyên Nguyễn Tất Thành</p>
+        </footer>
+    </div>
+</body>
+
+</html>

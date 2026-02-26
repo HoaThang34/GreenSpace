@@ -1,72 +1,164 @@
 <!doctype html>
 <html lang="vi">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bạn Bè</title>
+  <title>Bạn Bè — GreenSpace</title>
   <link rel="stylesheet" href="/static/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    body { background: var(--bg); }
-    .friends-container { max-width: 800px; margin: 30px auto; padding: 0 15px; }
-    .section-title { font-size: 1.5rem; font-weight: 600; margin: 30px 0 15px; color: var(--fg); }
-    .friend-card, .request-card { 
-      background: var(--panel); 
-      border: 1px solid var(--border); 
-      border-radius: 12px; 
-      padding: 15px 20px; 
-      margin-bottom: 12px;
+    body {
+      background: var(--background);
+    }
+
+    .friends-container {
+      max-width: 680px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 24px 0 12px;
+      color: var(--muted-foreground);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .friend-card,
+    .request-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 12px 16px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 15px;
-      transition: all 0.2s ease;
+      gap: 12px;
+      transition: border-color 0.15s ease;
     }
-    .friend-card:hover, .request-card:hover { 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transform: translateY(-2px);
+
+    .friend-card:hover,
+    .request-card:hover {
+      border-color: var(--muted-foreground);
     }
-    .friend-avatar { 
-      width: 50px; 
-      height: 50px; 
-      border-radius: 50%; 
-      display: grid; 
-      place-items: center; 
-      font-weight: 600; 
-      font-size: 1.3rem;
+
+    .friend-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 1rem;
       flex-shrink: 0;
     }
-    .friend-info { flex-grow: 1; }
-    .friend-name { font-weight: 600; color: var(--fg); margin-bottom: 4px; }
-    .friend-meta { font-size: 0.85rem; color: var(--muted); }
-    .friend-actions { display: flex; gap: 8px; }
-    .btn-small { padding: 6px 12px; font-size: 0.85rem; }
-    .empty-state { text-align: center; padding: 40px 20px; color: var(--muted); }
-    .empty-state i { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
-    .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid var(--border); }
-    .tab { padding: 12px 20px; background: transparent; border: none; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
-    .tab.active { color: var(--fg); border-bottom-color: var(--mood); }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+
+    .friend-info {
+      flex-grow: 1;
+    }
+
+    .friend-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--foreground);
+      margin-bottom: 2px;
+    }
+
+    .friend-meta {
+      font-size: 0.8rem;
+      color: var(--muted-foreground);
+    }
+
+    .friend-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-small {
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted-foreground);
+    }
+
+    .empty-state i {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      opacity: 0.4;
+    }
+
+    /* Tabs (shadcn style) */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 3px;
+      background: var(--muted);
+    }
+
+    .tab {
+      flex: 1;
+      padding: 8px 16px;
+      background: transparent;
+      border: none;
+      color: var(--muted-foreground);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      font-size: 0.85rem;
+      font-family: inherit;
+      transition: all 0.15s ease;
+      text-align: center;
+    }
+
+    .tab.active {
+      background: var(--card);
+      color: var(--foreground);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
   </style>
 </head>
+
 <body>
   <header class="appbar">
     <div class="brand">
-      <a href="/community" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
+      <a href="/community" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
         <span class="logo">🌱</span>
         <div>
-          <span class="brand-title" style="color:var(--fg);">Bạn Bè</span>
-          <div style="font-size: 0.75rem; color: var(--muted); margin-top: 2px;">Kết nối và giao lưu</div>
+          <span class="brand-title" style="color:var(--foreground);">Bạn Bè</span>
+          <div class="brand-tagline">Kết nối và giao lưu</div>
         </div>
       </a>
     </div>
     <div class="controls">
-      <a class="chip" href="/chat" style="background: var(--mood); color: white;">Chatbot</a>
+      <a class="chip" href="/chat" style="background: var(--mood); color: white; border-color: var(--mood);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        Chatbot
+      </a>
       <a class="chip" href="/community">Cộng đồng</a>
       <a class="chip" href="/messages">Tin nhắn</a>
     </div>
   </header>
-  
+
   <main class="friends-container">
     <div class="tabs">
       <button class="tab active" data-tab="friends">Bạn bè</button>
@@ -74,21 +166,18 @@
       <button class="tab" data-tab="suggestions">Gợi ý</button>
     </div>
 
-    <!-- Tab: Bạn bè -->
     <div id="friendsTab" class="tab-content active">
       <div id="friendsList"></div>
     </div>
 
-    <!-- Tab: Lời mời -->
     <div id="requestsTab" class="tab-content">
       <h3 class="section-title">Lời mời đã nhận</h3>
       <div id="receivedRequestsList"></div>
-      
-      <h3 class="section-title" style="margin-top: 30px;">Lời mời đã gửi</h3>
+
+      <h3 class="section-title" style="margin-top: 24px;">Lời mời đã gửi</h3>
       <div id="sentRequestsList"></div>
     </div>
 
-    <!-- Tab: Gợi ý -->
     <div id="suggestionsTab" class="tab-content">
       <div id="suggestionsList"></div>
     </div>
@@ -97,5 +186,5 @@
   <script src="/static/friends.js"></script>
   <script src="/static/theme.js"></script>
 </body>
-</html>
 
+</html>

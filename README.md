@@ -1,18 +1,18 @@
-# 🌱 Solace — Nơi Tâm Hồn Tìm Thấy Sự An Ủi
+# 🌱 GreenSpace — Giá trị cốt lõi từ sự thấu cảm.
 
-**Solace** là một nền tảng kết hợp giữa chatbot AI đồng cảm và một cộng đồng thu nhỏ, được thiết kế để trở thành một không gian an toàn, riêng tư và thấu hiểu, nơi bạn có thể khám phá cảm xúc, chia sẻ câu chuyện và tìm thấy sự an ủi cho những tâm tư của mình.
+**GreenSpace** là một nền tảng kết hợp giữa chatbot AI đồng cảm và một cộng đồng thu nhỏ, được thiết kế để trở thành một không gian an toàn, riêng tư và thấu hiểu, nơi bạn có thể khám phá cảm xúc, chia sẻ câu chuyện và tìm thấy sự an ủi cho những tâm tư của mình.
 
-> ⚠️ **Miễn trừ trách nhiệm:** Solace là một người bạn đồng hành hỗ trợ, **không phải là sự thay thế cho chăm sóc sức khỏe tâm thần chuyên nghiệp**. Nếu bạn đang trong cơn khủng hoảng, vui lòng liên hệ ngay với các dịch vụ cấp cứu tại địa phương.
+> ⚠️ **Miễn trừ trách nhiệm:** GreenSpace là một người bạn đồng hành hỗ trợ, **không phải là sự thay thế cho chăm sóc sức khỏe tâm thần chuyên nghiệp**. Nếu bạn đang trong cơn khủng hoảng, vui lòng liên hệ ngay với các dịch vụ cấp cứu tại địa phương.
 
 ---
 
 ## ✨ CÁC TÍNH NĂNG NỔI BẬT
 
-Solace không chỉ là một ứng dụng, mà là một hệ sinh thái được xây dựng với sự đồng cảm làm cốt lõi.
+GreenSpace không chỉ là một ứng dụng, mà là một hệ sinh thái được xây dựng với sự đồng cảm làm cốt lõi.
 
-### 1. Người Bạn Đồng Hành AI - Solace Bot
+### 1. Người Bạn Đồng Hành AI - GreenSpace Bot
 Trò chuyện riêng tư 1-1 với chatbot AI được huấn luyện để trở thành một người bạn tri kỷ:
-- **Thấu hiểu & Sâu sắc:** Không đưa ra lời khuyên sáo rỗng, Solace Bot giúp bạn tự gỡ rối những suy nghĩ của chính mình thông qua những câu hỏi gợi mở và góc nhìn tinh tế.
+- **Thấu hiểu & Sâu sắc:** Không đưa ra lời khuyên sáo rỗng, GreenSpace Bot giúp bạn tự gỡ rối những suy nghĩ của chính mình thông qua những câu hỏi gợi mở và góc nhìn tinh tế.
 - **Phản hồi cảm xúc:** Giao diện và màu sắc của cuộc trò chuyện thay đổi linh hoạt dựa trên cảm xúc mà AI cảm nhận được từ bạn, tạo ra một không gian trò chuyện sống động.
 - **Nhập liệu bằng giọng nói:** Dễ dàng chia sẻ suy nghĩ của bạn một cách tự nhiên bằng Tiếng Việt.
 
@@ -46,7 +46,7 @@ Một trang quản trị mạnh mẽ cho phép theo dõi và quản lý mọi kh
 **Chỉ cần mở trình duyệt và truy cập:** **[http://solace.ddns.net/](http://solace.ddns.net/)**
 
 ### Cách 2: Tự Cài Đặt
-Dành cho lập trình viên hoặc người dùng muốn sự riêng tư tuyệt đối bằng cách chạy Solace trên máy tính cá nhân.
+Dành cho lập trình viên hoặc người dùng muốn sự riêng tư tuyệt đối bằng cách chạy GreenSpace trên máy tính cá nhân.
 
 ---
 
@@ -59,7 +59,7 @@ Dành cho lập trình viên hoặc người dùng muốn sự riêng tư tuyệ
 2.  **Ollama:** Tải và cài đặt từ [ollama.com](https://ollama.com). Sau khi cài đặt, hãy chạy ứng dụng Ollama một lần để khởi động dịch vụ nền.
 
 ### Bước 2: Tải và Cài Đặt Thư Viện
-1.  Tải về và giải nén mã nguồn của Solace vào một thư mục.
+1.  Tải về và giải nén mã nguồn của GreenSpace vào một thư mục.
 2.  Mở **Terminal** (hoặc Command Prompt) và điều hướng đến thư mục đó.
 3.  Chạy lệnh:
     ```bash
@@ -92,7 +92,7 @@ Chỉ cần làm một lần duy nhất. Trong Terminal, tại thư mục dự �
     *(Lệnh này sẽ tạo file `aseed.db` trong thư mục `data`)*.
 
 ### Bước 5: Chạy Máy Chủ!
-Cuối cùng, chạy lệnh sau để khởi động Solace:
+Cuối cùng, chạy lệnh sau để khởi động GreenSpace:
 ```bash
 python main_server.py
 ```

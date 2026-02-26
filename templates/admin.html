@@ -1,98 +1,181 @@
 <!doctype html>
 <html lang="vi">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trung Tâm Điều Khiển</title>
+  <title>Trung Tâm Điều Khiển — GreenSpace</title>
   <link rel="stylesheet" href="/static/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="/static/admin_style.css" />
 </head>
+
 <body>
   <header class="appbar">
     <div class="brand">
       <span class="logo">🌱</span>
-      <span class="brand-title">Trung Tâm Điều Khiển</span>
+      <div>
+        <span class="brand-title">Trung Tâm Điều Khiển</span>
+        <div class="brand-tagline">Quản lý hệ thống GreenSpace</div>
+      </div>
     </div>
-    <!-- Thêm các nút điều hướng -->
     <div class="controls">
-      <a class="chip" href="/chat">← Quay lại Chat</a>
-      <button class="chip" id="logoutBtn">Đăng xuất</button>
+      <a class="chip" href="/chat">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Quay lại Chat
+      </a>
+      <button class="chip" id="logoutBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        Đăng xuất
+      </button>
     </div>
   </header>
 
   <main class="admin-container">
     <div class="tabs">
-      <button class="tab-button active" data-tab="dashboard"><i class="fas fa-tachometer-alt"></i> Bảng Điều Khiển</button>
-      <button class="tab-button" data-tab="users"><i class="fas fa-users"></i> Quản Lý Người Dùng</button>
-      <button class="tab-button" data-tab="content"><i class="fas fa-file-alt"></i> Quản Lý Nội Dung</button>
-      <button class="tab-button" data-tab="analytics"><i class="fas fa-chart-pie"></i> Phân Tích</button>
+      <button class="tab-button active" data-tab="dashboard">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        Bảng Điều Khiển
+      </button>
+      <button class="tab-button" data-tab="users">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        Người Dùng
+      </button>
+      <button class="tab-button" data-tab="content">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+        </svg>
+        Nội Dung
+      </button>
+      <button class="tab-button" data-tab="analytics">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+        Phân Tích
+      </button>
     </div>
 
-    <!-- Tab 1: Bảng Điều Khiển -->
+    <!-- Tab 1: Dashboard -->
     <div id="dashboard" class="tab-content active">
-        <div class="stat-grid">
-            <div class="stat-card"><h3>Tổng Người Dùng</h3><p id="statTotalUsers">...</p></div>
-            <div class="stat-card"><h3>Tổng Bài Đăng</h3><p id="statTotalPosts">...</p></div>
-            <div class="stat-card"><h3>Tổng Bình Luận</h3><p id="statTotalComments">...</p></div>
-            <div class="stat-card"><h3>Người Dùng Mới (7 ngày)</h3><p id="statNewUsers">...</p></div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <h3>Tổng Người Dùng</h3>
+          <p id="statTotalUsers">...</p>
         </div>
-        <div class="grid-2">
-            <div class="panel"><h3>Tăng Trưởng Người Dùng (7 ngày)</h3><canvas id="userGrowthChart"></canvas></div>
-            <div class="panel"><h3>Hoạt Động Gần Đây</h3><ul id="recentActivityList"></ul></div>
+        <div class="stat-card">
+          <h3>Tổng Bài Đăng</h3>
+          <p id="statTotalPosts">...</p>
         </div>
+        <div class="stat-card">
+          <h3>Tổng Bình Luận</h3>
+          <p id="statTotalComments">...</p>
+        </div>
+        <div class="stat-card">
+          <h3>Người Dùng Mới (7 ngày)</h3>
+          <p id="statNewUsers">...</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <h3>Tăng Trưởng Người Dùng (7 ngày)</h3><canvas id="userGrowthChart"></canvas>
+        </div>
+        <div class="panel">
+          <h3>Hoạt Động Gần Đây</h3>
+          <ul id="recentActivityList"></ul>
+        </div>
+      </div>
     </div>
 
-    <!-- Tab 2: Quản Lý Người Dùng -->
+    <!-- Tab 2: Users -->
     <div id="users" class="tab-content">
       <div class="toolbar">
         <input type="text" id="userSearchInput" class="search-input" placeholder="Tìm người dùng theo tên...">
       </div>
       <div class="table-container">
         <table>
-          <thead><tr><th>ID</th><th>Tên đăng nhập</th><th>Tên hiển thị</th><th>Ngày tạo</th><th>Bài đăng</th><th>Bình luận</th><th>Hành động</th></tr></thead>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tên đăng nhập</th>
+              <th>Tên hiển thị</th>
+              <th>Ngày tạo</th>
+              <th>Bài đăng</th>
+              <th>Bình luận</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
           <tbody id="userTableBody"></tbody>
         </table>
       </div>
     </div>
 
-    <!-- Tab 3: Quản Lý Nội Dung -->
+    <!-- Tab 3: Content -->
     <div id="content" class="tab-content">
-        <div class="toolbar">
-            <input type="text" id="contentSearchInput" class="search-input" placeholder="Tìm nội dung...">
-        </div>
-        <div class="table-container">
-            <table>
-                <thead><tr><th>Loại</th><th>Nội dung</th><th>Tác giả</th><th>Ngày đăng</th><th>Hành động</th></tr></thead>
-                <tbody id="contentTableBody"></tbody>
-            </table>
-        </div>
-    </div>
-    <div id="analytics" class="tab-content">
-      <h2>Phân Tích Cộng Đồng</h2>
-      <div class="grid-2" style="margin-top: 30px;">
-          <div class="panel">
-              <h3>Phân Bổ Tương Tác</h3>
-              <div style="position: relative; height:300px">
-                  <canvas id="reactionChart"></canvas>
-              </div>
-          </div>
-          <div class="panel">
-              <h3>Top 5 Người Dùng Tích Cực</h3>
-              <div style="position: relative; height:300px">
-                  <canvas id="topUsersChart"></canvas>
-              </div>
-          </div>
+      <div class="toolbar">
+        <input type="text" id="contentSearchInput" class="search-input" placeholder="Tìm nội dung...">
       </div>
-  </div>
-    <div id="content" class="tab-content"></div>
-    <div id="analytics" class="tab-content"></div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Loại</th>
+              <th>Nội dung</th>
+              <th>Tác giả</th>
+              <th>Ngày đăng</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody id="contentTableBody"></tbody>
+        </table>
+      </div>
+    </div>
 
+    <!-- Tab 4: Analytics -->
+    <div id="analytics" class="tab-content">
+      <h2 style="margin-bottom: 20px;">Phân Tích Cộng Đồng</h2>
+      <div class="grid-2">
+        <div class="panel">
+          <h3>Phân Bổ Tương Tác</h3>
+          <div style="position: relative; height:280px"><canvas id="reactionChart"></canvas></div>
+        </div>
+        <div class="panel">
+          <h3>Top 5 Người Dùng Tích Cực</h3>
+          <div style="position: relative; height:280px"><canvas id="topUsersChart"></canvas></div>
+        </div>
+      </div>
+    </div>
   </main>
-  
+
   <div class="modal" id="userDetailModal"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="/static/admin.js"></script>
 </body>
+
 </html>

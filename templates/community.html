@@ -1,175 +1,374 @@
 <!doctype html>
 <html lang="vi">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cộng Đồng</title>
+  <title>Cộng Đồng — GreenSpace</title>
   <link rel="stylesheet" href="/static/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- Driver.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.css" />
+  <script src="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.js.iife.js"></script>
+
   <style>
-    body { background: var(--bg); }
-    .community-container { max-width: 800px; margin: 30px auto; padding: 0 15px; }
-    .post-card { 
-      background: var(--panel); 
-      border: 1px solid var(--border); 
-      border-radius: 16px; 
-      margin-bottom: 25px; 
-      overflow: hidden; 
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    body {
+      background: var(--background);
     }
-    .post-card:hover { 
-      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.15);
-      transform: translateY(-2px);
+
+    .community-container {
+      max-width: 680px;
+      margin: 24px auto;
+      padding: 0 16px;
     }
-    .post-body { padding: 20px 25px; }
-    .post-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 15px; }
-    .author-avatar { 
-      width: 45px; 
-      height: 45px; 
-      border-radius: 50%; 
-      background: var(--chip-bg); 
-      display: grid; 
-      place-items: center; 
-      font-weight: 600; 
-      font-size: 1.2rem; 
+
+    .post-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: border-color 0.15s ease;
+    }
+
+    .post-card:hover {
+      border-color: var(--muted-foreground);
+    }
+
+    .post-body {
+      padding: 16px 20px;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--secondary);
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 0.9rem;
       flex-shrink: 0;
-      transition: transform 0.2s;
+      transition: transform 0.15s;
     }
-    .author-avatar:hover { transform: scale(1.1); }
-    .author-info { flex-grow: 1; min-width: 0; }
-    .post-author { font-weight: 600; color: var(--fg); text-decoration: none; }
-    .post-author:hover { color: var(--mood); }
-    .post-meta { font-size: 0.8rem; color: var(--muted); display: block; margin-top: 2px; }
-    .post-content { 
-      line-height: 1.8; 
-      white-space: pre-wrap; 
-      margin-bottom: 20px; 
+
+    .author-avatar:hover {
+      transform: scale(1.05);
+    }
+
+    .author-info {
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .post-author {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--foreground);
+      text-decoration: none;
+    }
+
+    .post-author:hover {
+      color: var(--ring);
+    }
+
+    .post-meta {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      display: block;
+      margin-top: 1px;
+    }
+
+    .post-content {
+      line-height: 1.7;
+      white-space: pre-wrap;
+      margin-bottom: 12px;
       word-wrap: break-word;
-      color: var(--fg);
+      color: var(--foreground);
+      font-size: 0.9rem;
     }
-    .post-footer { 
-      border-top: 1px solid var(--border); 
-      padding: 12px 25px; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      background: color-mix(in srgb, var(--panel) 50%, transparent);
-    }
-    .reaction-bar { display: flex; gap: 8px; }
-    .reaction-btn { 
-      background: var(--chip-bg); 
-      border: 1px solid var(--border); 
-      color: var(--muted); 
-      padding: 8px 15px; 
-      border-radius: 99px; 
-      cursor: pointer; 
-      font-size: 0.9rem; 
-      font-weight: 500; 
-      transition: all 0.2s ease;
+
+    .post-footer {
+      border-top: 1px solid var(--border);
+      padding: 10px 20px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
+    }
+
+    .reaction-bar {
+      display: flex;
       gap: 6px;
     }
-    .reaction-btn:hover { 
-      background: var(--border); 
-      color: var(--fg);
-      transform: translateY(-1px);
-    }
-    .reaction-btn.active { 
-      background: var(--mood); 
-      color: #fff; 
-      border-color: var(--mood);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .reaction-btn i { font-size: 0.85rem; }
-    .comment-link { 
-      color: var(--muted); 
-      text-decoration: none; 
+
+    .reaction-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted-foreground);
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 0.8rem;
       font-weight: 500;
-      transition: color 0.2s;
+      transition: all 0.15s ease;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
+      font-family: inherit;
     }
-    .comment-link:hover { color: var(--fg); }
-    .create-post-card { 
-      background: linear-gradient(135deg, var(--panel) 0%, color-mix(in srgb, var(--panel) 95%, var(--mood)) 100%);
-      border: 2px dashed var(--border);
+
+    .reaction-btn:hover {
+      background: var(--accent);
+      color: var(--foreground);
     }
-    .create-post-card:hover { border-color: var(--mood); }
+
+    .reaction-btn.active {
+      background: var(--ring);
+      color: #fff;
+      border-color: var(--ring);
+    }
+
+    .reaction-btn i {
+      font-size: 0.8rem;
+    }
+
+    .comment-link {
+      color: var(--muted-foreground);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.85rem;
+      transition: color 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .comment-link:hover {
+      color: var(--foreground);
+    }
+
+    .create-post-card {
+      border: 1px dashed var(--border);
+      background: var(--card);
+    }
+
+    .create-post-card:hover {
+      border-color: var(--ring);
+    }
+
+    /* Search bar */
+    .search-bar-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+    }
+
+    .search-wrapper {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrapper {
+      flex: 1;
+      min-width: 180px;
+      position: relative;
+    }
+
+    .search-input-wrapper input {
+      width: 100%;
+      padding: 8px 12px;
+      padding-left: 34px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--foreground);
+      font-size: 0.85rem;
+      font-family: inherit;
+    }
+
+    .search-input-wrapper input:focus {
+      border-color: var(--ring);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 20%, transparent);
+      outline: none;
+    }
+
+    .search-input-wrapper svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted-foreground);
+    }
+
+    #searchResults {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 4px;
+      background: var(--popover);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 50;
+      box-shadow: var(--shadow-lg);
+    }
   </style>
 </head>
+
 <body>
   <header class="appbar">
     <div class="brand">
-        <a href="/community" style="display:flex; align-items:center; gap:12px; text-decoration:none;">
-            <span class="logo">🌱</span>
-            <div>
-              <span class="brand-title" style="color:var(--fg);">Cộng Đồng</span>
-              <div style="font-size: 0.75rem; color: var(--muted); margin-top: 2px;">Nơi chia sẻ và kết nối</div>
-            </div>
-        </a>
+      <a href="/community" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+        <span class="logo">🌱</span>
+        <div>
+          <span class="brand-title" style="color:var(--foreground);">Cộng Đồng</span>
+          <div class="brand-tagline">Nơi chia sẻ và kết nối</div>
+        </div>
+      </a>
     </div>
     <div class="controls">
-      <a class="chip" href="/chat" style="background: var(--mood); color: white;">Chatbot</a>
-      <a class="chip" href="/friends">Bạn bè</a>
-      <a class="chip" href="/messages">Tin nhắn <span id="unreadBadge" style="display:none; background:var(--mood-anger); color:white; border-radius:50%; width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; margin-left:4px;">0</span></a>
+      <a class="chip" href="/chat" id="tour-chatbot"
+        style="background: var(--mood); color: white; border-color: var(--mood);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        Chatbot
+      </a>
+      <a class="chip" href="/friends">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <line x1="19" y1="8" x2="19" y2="14"></line>
+          <line x1="22" y1="11" x2="16" y2="11"></line>
+        </svg>
+        Bạn bè
+      </a>
+      <a class="chip" href="/messages">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        Tin nhắn
+        <span id="unreadBadge" class="badge destructive" style="display:none;">0</span>
+      </a>
       <div class="user-menu">
         <button class="chip user-chip" id="userChip">
-          <span id="displayName">{{ display_name }}</span> ▼
+          <span id="displayName">{{ display_name }}</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
         </button>
         <div class="dropdown-menu" id="dropdownMenu">
           <a href="/profile/{{ username }}">Hồ sơ của tôi</a>
           <a href="/friends">Bạn bè</a>
           <a href="/messages">Tin nhắn</a>
-          <div style="height: 1px; background: var(--border); margin: 8px 0;"></div>
+          <div style="height: 1px; background: var(--border); margin: 4px 0;"></div>
           <a href="#" id="logoutBtn">Đăng xuất</a>
         </div>
       </div>
     </div>
   </header>
-  
+
   <main class="community-container">
-    <!-- Tìm kiếm và filter -->
-    <div class="post-card" style="margin-bottom: 20px; padding: 15px 20px;">
-      <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-        <div style="flex: 1; min-width: 200px; position: relative;">
-          <input type="text" id="searchUsers" placeholder="🔍 Tìm kiếm người dùng..." style="width: 100%; padding: 10px 15px; padding-right: 40px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg); color: var(--fg); font-size: 0.95rem;">
-          <div id="searchResults" style="display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 5px; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; max-height: 400px; overflow-y: auto; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"></div>
+    <!-- Search bar -->
+    <div class="search-bar-card" id="tour-search">
+      <div class="search-wrapper">
+        <div class="search-input-wrapper">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchUsers" placeholder="Tìm kiếm người dùng...">
+          <div id="searchResults"></div>
         </div>
-        <button class="btn" id="showAllUsersBtn" style="white-space: nowrap; background: var(--mood-joy); color: white;">Tất cả người dùng</button>
+        <button class="btn" id="showAllUsersBtn"
+          style="background: var(--mood-joy); color: white; border-color: var(--mood-joy);">Tất cả người dùng</button>
       </div>
     </div>
-    
-    <!-- Form tạo bài đăng -->
-    <div class="post-card create-post-card">
+
+    <!-- Create post -->
+    <div class="post-card create-post-card" id="tour-create">
       <div class="post-body">
         <form id="createPostForm">
-          <textarea id="postContent" style="width:100%; min-height:100px; background:transparent; border:none; color:var(--fg); font-size:1.1rem; resize:vertical; font-family: inherit;" placeholder="Chia sẻ tâm trạng, suy nghĩ của bạn với cộng đồng..." required></textarea>
-          <div class="actions" style="justify-content: space-between; align-items: center; margin-top: 15px; border-top:1px solid var(--border); padding-top:15px;">
-            <div style="color: var(--muted); font-size: 0.85rem;">Mẹo: Bạn có thể chia sẻ cảm xúc, câu chuyện, hoặc đơn giản là tâm trạng hôm nay</div>
+          <textarea id="postContent"
+            style="width:100%; min-height:80px; background:transparent; border:none; color:var(--foreground); font-size:0.9rem; resize:vertical; font-family: inherit; outline: none;"
+            placeholder="Chia sẻ tâm trạng, suy nghĩ của bạn với cộng đồng..." required></textarea>
+          <div
+            style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; border-top:1px solid var(--border); padding-top:12px;">
+            <span class="text-muted text-sm">Mẹo: Chia sẻ cảm xúc, câu chuyện, hoặc tâm trạng hôm nay</span>
             <button type="submit" class="btn primary">Đăng bài</button>
           </div>
         </form>
       </div>
     </div>
-    
-    <!-- Danh sách bài đăng -->
+
+    <!-- Posts list -->
     <div id="postsContainer"></div>
-    
-    <!-- Modal danh sách tất cả user -->
+
+    <!-- All users modal -->
     <div class="modal" id="allUsersModal">
-      <div class="panel" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+      <div class="panel" style="max-width: 520px; max-height: 80vh; overflow-y: auto;">
         <div class="histbar">
           <h2>Tất cả người dùng</h2>
           <button class="btn" id="closeAllUsersModal">Đóng</button>
         </div>
-        <div id="allUsersList" style="margin-top: 20px;"></div>
+        <div id="allUsersList" style="margin-top: 16px;"></div>
       </div>
     </div>
   </main>
+
   <script src="/static/community.js"></script>
   <script src="/static/theme.js"></script>
+
+  <!-- Driver.js Onboarding Tour -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // test again: localStorage.removeItem('greenspace_community_tour_completed');
+      if (!localStorage.getItem('greenspace_community_tour_completed')) {
+        const driver = window.driver.js.driver;
+        const driverObj = driver({
+          showProgress: true,
+          nextBtnText: 'Tiếp theo',
+          prevBtnText: 'Quay lại',
+          doneBtnText: 'Hoàn tất',
+          allowClose: true,
+          animate: true,
+          smoothScroll: true,
+          onDestroyed: () => {
+            localStorage.setItem('greenspace_community_tour_completed', 'true');
+          },
+          steps: [
+            { element: '.brand', popover: { title: 'Cộng đồng gắn kết 🌍', description: 'Nơi mọi người cùng chia sẻ, thấu hiểu và xoa dịu lẫn nhau.', side: "bottom", align: 'start' } },
+            { element: '#tour-create', popover: { title: 'Đăng tải cảm xúc 📝', description: 'Viết ra những gì bạn đang nghĩ để tìm kiếm sự đồng cảm từ người khác.', side: "top", align: 'start' } },
+            { element: '#tour-search', popover: { title: 'Tìm kiếm bạn bè 🔍', description: 'Dễ dàng kết nối thêm những người cùng chí hướng.', side: "top", align: 'start' } },
+            { element: '#tour-chatbot', popover: { title: 'Về phòng Chat 🏠', description: 'Bất cứ khi nào cần không gian riêng, công cụ Chat luôn sẵn sàng mở cửa chờ bạn.', side: "bottom", align: 'end' } }
+          ]
+        });
+
+        setTimeout(() => {
+          driverObj.drive();
+        }, 1000);
+      }
+    });
+  </script>
 </body>
+
 </html>

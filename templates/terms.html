@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điều khoản sử dụng - GreenSpace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 240 10% 3.9%;
+            --primary: 142.1 76.2% 36.3%;
+            --border: 240 5.9% 90%;
+        }
+
+        .dark {
+            --background: 240 10% 3.9%;
+            --foreground: 0 0% 98%;
+            --border: 240 3.7% 15.9%;
+        }
+
+        body {
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen p-6 md:p-12">
+    <div class="max-w-3xl mx-auto">
+        <header class="mb-12">
+            <a href="/" class="inline-flex items-center gap-2 mb-6 text-primary hover:opacity-80 transition-opacity">
+                <span>🌱</span>
+                <span class="font-bold">GreenSpace</span>
+            </a>
+            <h1 class="text-4xl font-bold tracking-tight">Điều khoản sử dụng</h1>
+            <p class="text-gray-500 mt-2">Cập nhật lần cuối: 26 tháng 2, 2026</p>
+        </header>
+
+        <div class="space-y-8 text-gray-700 dark:text-gray-300 leading-relaxed">
+            <section>
+                <h2 class="text-2xl font-semibold text-foreground mb-4">1. Chấp nhận điều khoản</h2>
+                <p>Bằng việc truy cập và sử dụng GreenSpace, bạn đồng ý tuân thủ các điều khoản và điều kiện được nêu
+                    tại đây. Nếu bạn không đồng ý với bất kỳ phần nào của các điều khoản này, vui lòng không sử dụng
+                    dịch vụ của chúng tôi.</p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold text-foreground mb-4">2. Mô tả dịch vụ</h2>
+                <p>GreenSpace là một nền tảng hỗ trợ tinh thần sử dụng trí tuệ nhân tạo (AI). Dịch vụ này không phải là
+                    một dịch vụ y tế chính thống, không thay thế cho việc tư vấn, chẩn đoán hoặc điều trị từ các chuyên
+                    gia tâm lý hoặc bác sĩ chuyên khoa.</p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold text-foreground mb-4">3. Trách nhiệm người dùng</h2>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li>Bạn phải chịu trách nhiệm về nội dung mà mình chia sẻ trên nền tảng.</li>
+                    <li>Không sử dụng dịch vụ cho mục đích vi phạm pháp luật hoặc gây hại cho người khác.</li>
+                    <li>Khi sử dụng chế độ Trải nghiệm ẩn danh, bạn hiểu rằng dữ liệu sẽ không được lưu lại và chúng tôi
+                        không thể hỗ trợ khôi phục.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold text-foreground mb-4">4. Giới hạn trách nhiệm</h2>
+                <p>Chúng tôi không chịu trách nhiệm cho bất kỳ quyết định cá nhân nào của bạn dựa trên các phản hồi từ
+                    AI. Mọi thông tin do AI cung cấp chỉ mang tính chất tham khảo và hỗ trợ tinh thần ban đầu.</p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold text-foreground mb-4">5. Thay đổi điều khoản</h2>
+                <p>Chúng tôi có quyền sửa đổi hoặc thay thế các điều khoản này bất cứ lúc nào. Việc bạn tiếp tục sử dụng
+                    dịch vụ sau khi có các thay đổi đồng nghĩa với việc bạn chấp nhận các điều khoản mới.</p>
+            </section>
+        </div>
+
+        <footer class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800 text-center">
+            <p class="text-sm text-gray-500">Bản quyền thuộc Agent_LLM — Trường THPT Chuyên Nguyễn Tất Thành</p>
+        </footer>
+    </div>
+</body>
+
+</html>
